@@ -30,7 +30,8 @@ chmod 400 my-private-key.pem
 ssh -i my-private-key.pem @ubuntu3.93.185.64.compute-1.amazonaws.com
 ```
 
-![Install apache2](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/1637ad7a-bb54-4f1f-802b-87b9b5075c1e)
+![Screenshot (153)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/6aea6fe2-ff07-49f7-aa42-5ca240f9f22e)
+
 
 ## Step 1 - Install Apache2 and update its Firewall
 ```
@@ -39,7 +40,7 @@ sudo apt update
 ```
 sudo apt install apache2
 ```
-![Screenshot (153)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/b72ef6ac-5cc8-495e-a89a-f0c75341b197)
+![Install apache2](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/1637ad7a-bb54-4f1f-802b-87b9b5075c1e)
 
 
 
