@@ -79,4 +79,37 @@ curl -s http://169.254.169.254/latest/meta-data/public-ipv4
 The code was run again and there was no error
 ![Rerun](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/921e6043-5ef8-4724-84d3-d938527e4871)
 
- 
+## Step 2: Installing MySQL
+**1** **Installed MySQL database**
+MySQL server was installed successfully
+```
+sudo apt install mysql-server
+```
+![Installed MySQL server](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/837381f0-1725-4cb4-82d7-d5de74287020)
+When prompted, the installation was confirmed by y
+
+**2** **MySQL was verified**
+```
+sudo systemctl status Mysql
+```
+![Screenshot (163)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/e71a330b-1664-492f-b5bb-5cd5ea14795e)
+
+**3** **Logged into MySQL**
+```
+sudo mysql
+```
+This is connected to the MySQL administrative database user **root**, which is inferred by the use of sudo when running this command.
+
+**4** **Set password using mysql_native_password**
+```
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Admin123$';
+```
+![MySQL password added](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/49ea35bd-2d41-4125-b11b-b235456fc6d0)
+The user password was defined by 'Emkay360' and exit MySQL
+
+**5** **Running interactive script**
+```
+sudo mysql_secure_installation
+```
+![running interactive script](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/9719e86e-5ca3-41f5-8480-8d7574523e14)
+
