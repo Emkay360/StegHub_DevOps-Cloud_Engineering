@@ -61,3 +61,10 @@ curl http://localhost:80
 http://3.93.185.64:80
 ```
 ![Screenshot (150)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/70cb8a0a-c9ef-473b-b959-371805341220)
+
+**Used another way to retrieve the public address other than the AWS console**
+```
+curl -s http://169.254.169.254/latest/meta-data/public-ipv4
+```
+The result return with a 404 not found
+![404 not found](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/cfbf49e3-fd40-43bf-9ed5-3e4a614c945c)
