@@ -42,14 +42,10 @@ sudo apt install apache2
 ```
 ![Install apache2](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/1637ad7a-bb54-4f1f-802b-87b9b5075c1e)
 
-
-
-
-
 **2** **Verify and run Apache package**
 ```
 sudo systemctl enable
 sudo systemctl status apache2
 ```
-![Screenshot (149)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/75eb38a7-6bd8-43ae-97b6-219660749d4a)
+![apache2](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/8efaf5ae-e567-4463-84b9-0b29e8fa0e36)
 
