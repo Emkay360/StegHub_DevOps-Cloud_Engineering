@@ -68,3 +68,15 @@ curl -s http://169.254.169.254/latest/meta-data/public-ipv4
 ```
 The result return with a 404 not found
 ![404 not found](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/cfbf49e3-fd40-43bf-9ed5-3e4a614c945c)
+
+I troubleshoot the error following the modifying the instance
+- Action: Instance Settings > Modify instance Meta Data
+- Change the settings in **IMDSv2** from **Required** to **Optional**
+![Screenshot (154)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/d08ac0bc-96cf-4949-bfb2-6749b7b57ef6)
+```
+curl -s http://169.254.169.254/latest/meta-data/public-ipv4
+```
+The code was run again and there was no error
+![Rerun](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/921e6043-5ef8-4724-84d3-d938527e4871)
+
+ 
