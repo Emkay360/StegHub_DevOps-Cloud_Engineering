@@ -23,6 +23,7 @@ LAMP is an open-sourced web development used by developers. It consists of 4 com
 
 **5** The private ssh key downloaded was used to connect to the instance.
 ```
-ssh -i my-private-key.pem @ubuntu3.93.185.64
+chmod 400 my-private-key.pem
+ssh -i my-private-key.pem @ubuntu3.93.185.64.compute-1.amazonaws.com
 ```
 ![Screenshot (153)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/b72ef6ac-5cc8-495e-a89a-f0c75341b197)
