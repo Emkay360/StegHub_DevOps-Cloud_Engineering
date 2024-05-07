@@ -5,3 +5,4 @@ LAMP is an open-sourced web development used by developers. It consists of 4 com
 **1.** EC2 instance of t2.micro type and Ubuntu 24.04 LTS (HVM) was launched in us-east-1 region using the AWS console  
 
 ![Screenshot (138)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/549148bd-6768-4e22-b09c-75e5108770d8)
+![Uploading Screenshot (139).png…]()
