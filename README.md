@@ -42,10 +42,22 @@ sudo apt install apache2
 ```
 ![Install apache2](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/1637ad7a-bb54-4f1f-802b-87b9b5075c1e)
 
-**2** **Verify and run Apache package**
+**2** **Enable and verify Apache2**
+If it is green, then it is running well
 ```
 sudo systemctl enable
 sudo systemctl status apache2
 ```
 ![apache2](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/8efaf5ae-e567-4463-84b9-0b29e8fa0e36)
 
+**3** **Checking if the server is running and can be accessed locally through the Ubuntu Shell**
+```
+curl http://localhost:80
+```
+![Local host](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/1ed7352d-4489-45f3-80a0-16845c5703b0)
+
+**4** **Testing how our Apache server can respond from the internet**
+```
+http://3.93.185.64:80
+```
+![Screenshot (150)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/70cb8a0a-c9ef-473b-b959-371805341220)
