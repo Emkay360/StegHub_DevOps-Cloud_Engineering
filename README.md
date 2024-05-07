@@ -14,4 +14,14 @@ LAMP is an open-sourced web development used by developers. It consists of 4 com
 - Allow traffic on port 80 (HTTP) with source from anywhere on the internet.
 - Allow traffic on port 443 (HTTPS) with source from anywhere on the internet.
 - Allow traffic on port 22 (SSH) with source from any IP address. This is opened by default
+  
 ![Screenshot (140)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/2ec68129-cda8-4f29-a419-fc75b5c6059e)
+
+**4** For the network configuration, the default VPS subnet was used.
+
+![Screenshot (141)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/2bf58110-92d1-4e02-98f1-1283f9adeaad)
+
+**5** The private ssh key downloaded was used to connect to the instance.
+```
+ssh -i my-private-key.pem @ubuntu3.93.185.64
+```
