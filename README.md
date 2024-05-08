@@ -121,3 +121,60 @@ sudo mysql -p
 ![logged into mysql with new password](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/9dcdb507-fa97-4951-9ceb-3fc6aef68963)
 Logged in to the console once again which required a password to connect as the root user
 
+## Step 3: Installing PHP
+**1** **Installed PHP**
+PHP Module allows PHP to communicate with MySQL-based databases 
+The following was installed together with PHP module.
+
+- PHP package
+- php-mysql, a module that allows php to communicate with mysql-based databases.
+- libapache2-mod, a package that allows Apache to handle PHP files.
+  ```
+  sudo apt install php libapache2-mod-php php-mysql
+  ```
+  ![Installing php](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/7ef871d8-5b86-4547-9eb8-971f1b055e72)
+
+  Confirm PHP version
+  ```
+  php -v
+  ```
+  ![php -v](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/c729233d-b5d4-4a30-aca5-993cfa63ed1b)
+
+  ## Step 4: Creating a Virtual Host for the website using Apache
+  **1** **Apache on Ubuntu 20.04 has a default server block enabled and configured to serve /var/www/html. Adding a directory next to the default one**
+  Creating a directory using **'mkdir* command.
+  ```
+  sudo mkdir /var/www/projectlamp
+  ```
+  **Assigning ownership to the directory with $USER environment variable which references the current system user.**
+  ```
+  sudo chown -R $USER:$USER /var/www/projectlamp
+  ```
+  ![adding our own directory](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/7f3630a3-537e-4851-880b-44e7445974b7)
+**2** **Create and open a new configuration file in Apache** **sites-available*
+```
+sudo vim /etc/apache2/sites-available/projectlamp.conf
+```
+Pasting bare-bones configuration below:
+```
+<VirtualHost *:80>
+  ServerName projectlamp
+  ServerAlias www.projectlamp
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/projectlamp
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+![Boner](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/85c768dd-8e8c-41eb-b409-d9bb3352f5d9)
+**3** **Show the new file in the site-available directory**
+```
+sudo ls /etc/apache2/sites-available
+```
+![apache available](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/dc3fd144-1be0-4e4e-8da6-99f64cdaed01)
+**4** **Enable the virtual host**
+```
+sudo a2ensite projectlamp
+```
+
+
