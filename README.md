@@ -204,7 +204,8 @@ sudo echo 'Hello LAMP from hostname' $(curl -s http://169.254.169.254/latest/met
 ```
 HTTP://http://3.93.185.64:80
 ```
-![Hello lamp](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/505f3882-c1fc-42a9-a78e-419fc95f325e)
+![Screenshot (167)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/738f16cc-17a5-44aa-a695-b8aad307ce8f)
+
 **10.** **Accessing the website through public DNS**
 ```
 http://<public-DNS-name>:80
