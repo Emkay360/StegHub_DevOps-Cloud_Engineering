@@ -112,4 +112,12 @@ The user password was defined by 'Emkay360' and exit MySQL
 sudo mysql_secure_installation
 ```
 ![running interactive script](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/9719e86e-5ca3-41f5-8480-8d7574523e14)
+Regardless of whether you choose to set up the **validate password plugin* the server will next ask you to select and confirm a password for the MySQL root user.
+
+**6** **After you select a new password, you log in to the MySQL console**
+```
+sudo mysql -p
+```
+![logged into mysql with new password](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/9dcdb507-fa97-4951-9ceb-3fc6aef68963)
+Logged in to the console once again which required a password to connect as the root user
 
