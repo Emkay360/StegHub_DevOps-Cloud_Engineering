@@ -211,4 +211,46 @@ HTTP://http://3.93.185.64:80
 http://<public-DNS-name>:80
 ```
 ![Screenshot (168)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/91dce020-a7e7-4a64-83b9-535e5ef52720)
+This file can be left in place as a temporary landing page for the application until an index.php file is set up to replace it. Once this is done, the index.html file should be renamed or removed from the document root as it will take precedence over index.php file by default.
+
+## Step 5: Enable PHP on the Website
+With the default DirectoryIndex setting on Apache, index.html file will always take precedence over index.php file. This is useful for setting up maintenance page in PHP applications, by creating a temporary index.html file containing an informative message for visitors. The index.html then becomes the landing page for the application. Once maintenance is over, the index.html is renamed or removed from the document root bringing back the regular application page. If the behaviour needs to be changed, /etc/apache2/mods-enabled/dir.conf file should be edited and the order in which the index.php file is listed within the DirectoryIndex directive should be changed.
+
+**1.** **Open the dir.conf file with vim to change the behaviour**
+```
+sudo vim /etc/apache2/mods-enabled/dir.conf
+```
+```
+<IfModule mod_dir.c>
+  # Change this:
+  # DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm
+  # To this:
+  DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+</IfModule>
+```
+![Screenshot (169)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/09633ed0-0803-478c-a5b6-0be316ecf4a3)
+
+**2.** **Reload Apache**
+Apache is reloaded for the changes to take effect
+```
+sudo systemctl reload apache2
+```
+![reload apache](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/2922b7de-f130-4094-b6d5-4535abcba458)
+**3.** **Create a new file named index.php**
+A new index.php file was created inside the customer web root folder.
+```
+vim /var/www/projectlamp/index.php
+```
+Added the text below and saved;
+```
+<?php
+phpinfo();
+```
+**4.** **Refreshed the page**
+![Screenshot (171)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/1e802197-622b-4582-adbf-7f75e74d4c92)
+After checking the relevant information about the PHP server, it's best to remove the file created as it contains sensitive information about PHP environment.
+```
+sudo rm /var/www/projectlamp/index.php
+```
+
 
