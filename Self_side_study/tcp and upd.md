@@ -26,8 +26,13 @@ In many cases, particularly with Transmission Control Protocol (TCP), when data 
 
 ## Web Protocols:
 **1** **HTTP:** **Port 80** This protocol is used to transfer hypertexts over the internet and it is defined by the www(World Wide Web) for information transfer.
+
 **2** **HTTPS:** **Port 443** HTTPS is an extension of the Hypertext Transfer Protocol (HTTP). It is used for secure communication over a computer network with the SSL/TLS protocol for encryption and authentication.
+
 **3** **SSH:** **Port 22** SSH (Secure Shell) is a protocol used for secure remote login and other secure network services.
+
 **4** **Telnet:** **Port 23** TELNET is a standard TCP/IP protocol used for virtual terminal service given by ISO. This enables one local machine to connect with another. The computer which is being connected is called a remote computer and which is connecting is called the local computer.
+
 **5** **FTP (File Transfer Protocol):** **Port 21** This protocol is used for transferring files from one system to another. This works on a client-server model. When a machine requests for file transfer from another machine, the FTO sets up a connection between the two and authenticates each other using their ID and Password. And, the desired file transfer takes place between the machines.
+
 **6** **SFTP (Secure File Transfer Protocol):** **Port 22** SFTP which is also known as SSH FTP refers to File Transfer Protocol (FTP) over Secure Shell (SSH) as it encrypts both commands and data while in transmission. SFTP acts as an extension to SSH and encrypts files and data then sends them over a secure shell data stream.
