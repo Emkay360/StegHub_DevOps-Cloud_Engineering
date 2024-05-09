@@ -21,8 +21,8 @@ Chmod 720 readme.txt
 
 **There are also three basic permissions:**
 - **Read** **(r):** Only allows the content of a file to be viewed.
-- Write  **(w):** Allows content to be viewed, edited/modified, or deleted.
-- Execute **(x):** Allows a content or file to be executed.
+- **Write**  **(w):** Allows content to be viewed, edited/modified, or deleted.
+- **Execute** **(x):** Allows a content or file to be executed.
 
 **Generally implemented options are:**
 - -R: It stands for recursive, i.e., add objects to subdirectories.
