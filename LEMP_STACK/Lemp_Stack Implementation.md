@@ -28,4 +28,13 @@ where **username=ubuntu** and **public ip address=54.196.130.53**
 
 ![Connecting EC2 with Bash](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/5f0b7506-40bd-4078-8a6f-234adca0ecc7)
 
+## Step 1: Install the nginx Web Server
+**Update and Upgrade**
+```
+sudo apt update
+sudo apt upgrade -y
+```
+![Sudo apt update](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/c1b474f0-90b6-436c-98c3-0f8280ea26d6)
+![sudo apt upgrade -y](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/f8717414-7dcb-4aa9-8532-3d1200ad05f7)
+
 
