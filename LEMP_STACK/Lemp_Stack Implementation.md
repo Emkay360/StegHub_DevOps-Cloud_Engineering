@@ -5,7 +5,7 @@ LEMP is an acronym for Linux, Nginx, MySQL, and PHP, which are four open-source 
 **1.** EC2 instance of t.2 micro type and Ubuntu 24.04 LTS (HVM) was launched in the us-east-1 region using the AWS console.
 ![Lemp server created](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/d3790328-6ac7-4e5f-bd38-29cb4d834ab8)
 **2.** Created SSH Key pair named "my-ec2-key.pem" to access the instance on the port.
-**3** The security group was configured in the following inbound rules:
+**3** The security group was configured with the following inbound rules:
 
 - Allow traffic on Port 80 (HTTP) with source from anywhere on the internet.
 - Allow traffic on Port 443 (HTTPS) with source from anywhere on the internet.
@@ -13,3 +13,7 @@ LEMP is an acronym for Linux, Nginx, MySQL, and PHP, which are four open-source 
 
   ![Security Group Config](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/58ca9a76-3814-4157-b4d3-2af1b28d210b)
 
+**4** The default VPC and Subnet were used for the network configuration. 
+
+![VPC](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/dc2cf623-4f8d-434b-a070-1e836306a156)
+![Subnet](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/4a382e40-b3cc-42fb-bbf0-96c49ba55e3f)
