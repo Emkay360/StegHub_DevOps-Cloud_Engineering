@@ -69,5 +69,5 @@ The above command gave an **404 error**
 
 ![Error 404 for nginx](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/f8ccc6f9-1cff-4a54-921f-e788f7a4b080)
 
-
+ 
 
