@@ -54,3 +54,11 @@ sudo systemctl status nginx
 curl http://localhost:80
 ```
 ![checking nginx locally](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/7de08141-24ce-4997-b4c9-0bd89d3b1c4f)
+
+**5. Test with the public ip address if the nginx server can respond to requests from the internet using the URL on the web browser**
+```
+http://54.196.130.53
+```
+![nginx page](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/ebc4ac81-0ae8-4425-b9a3-56109819eb41)
+
+
