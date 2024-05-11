@@ -61,4 +61,13 @@ http://54.196.130.53
 ```
 ![nginx page](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/ebc4ac81-0ae8-4425-b9a3-56109819eb41)
 
+**6. Another way of retrieving the public IP address**
+```
+curl -s http://54.196.130.53/latest/meta-data/public-ipv4
+```
+The above command gave an **404 error**
+
+![Error 404 for nginx](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/f8ccc6f9-1cff-4a54-921f-e788f7a4b080)
+
+
 
