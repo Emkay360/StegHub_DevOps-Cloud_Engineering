@@ -29,7 +29,7 @@ where **username=ubuntu** and **public ip address=54.196.130.53**
 ![Connecting EC2 with Bash](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/5f0b7506-40bd-4078-8a6f-234adca0ecc7)
 
 ## Step 1: Install the nginx Web Server
-**Update and Upgrade**
+**1. Update and Upgrade**
 ```
 sudo apt update
 sudo apt upgrade -y
@@ -37,4 +37,20 @@ sudo apt upgrade -y
 ![Sudo apt update](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/c1b474f0-90b6-436c-98c3-0f8280ea26d6)
 ![sudo apt upgrade -y](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/f8717414-7dcb-4aa9-8532-3d1200ad05f7)
 
+**2. Install nginx**
+```
+sudo apt install nginx
+```
+![Install nginx](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/466fbb17-1fd7-40b8-9439-46ffa377b6e9)
 
+**3. Verify that nginx is working**
+```
+sudo systemctl status nginx
+```
+![nginx status](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/530fc4f2-3b2d-4101-a8d6-064242eeb8ea)
+
+**4. Access nginx locally on the Ubuntu Shell**
+```
+curl http://localhost:80
+```
+![checking nginx locally](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/7de08141-24ce-4997-b4c9-0bd89d3b1c4f)
