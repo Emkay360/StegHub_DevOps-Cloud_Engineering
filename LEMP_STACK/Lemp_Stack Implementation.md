@@ -62,6 +62,8 @@ http://54.196.130.53
 ![nginx page](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/ebc4ac81-0ae8-4425-b9a3-56109819eb41)
 
 ## Step 2: Install MySQL
+
+**1. Installed MySQL Server**
 ```
 sudo apt install mysql-server
 ```
@@ -69,5 +71,17 @@ Press y when prompted.
 
 ![Installing mysql server (lemp)](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/37c23882-59a8-4fb9-90e1-67bfd8b60024)
 
- 
+**2. Log into the MySQL console**
+```
+sudo mysql
+```
+
+![mysql login](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/673b5d27-ed39-4020-9d6c-1973a8a6819a)
+
+**3 Set a password for the root user using mysql_native_password as a default authentification method**
+Here is the password and it was defined as 'Emkay360'
+```
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Emkay360';
+```
+![mysql password](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/2996ae36-4e3c-43bb-b28e-590b9d841e44)
 
