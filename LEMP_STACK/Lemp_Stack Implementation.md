@@ -176,3 +176,57 @@ server {
 - location ~ .php$ - This location handles the actual PHP processing by pointing Nginx to the fastcgi-php.conf configuration file and the php7.4-fpm.sock file, which declares what socket is associated with php-fpm.
 
 - location ~ /.ht - The last location block deals with .htaccess files, which Nginx does not process. By adding the deny all directive, if any .htaccess files happen to find their way into the document root, they will not be served to visitors.
+
+**4 Activate the configuration by linking to the config file from Nginx's sites-enabled directory:**
+```
+sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/
+```
+![sites available](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/c426b265-4f35-47b1-80fb-2e07e0d8467c)
+
+This will tell Nginx to use this configuration when next it is reloaded.
+**5 Test the configuration syntax error**
+```
+sudo nginx -t
+```
+![syntax okay](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/2b8ec8fe-7f91-4960-8e20-3b203a0fa6c6)
+
+**6 Disable the default Nginx host that is currently configured to listen on port 80**
+```
+sudo unlink /etc/nginx/sites-enabled/default
+```
+![Disable Nginx](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/474f7bdf-d44f-473f-b61b-d1f77e323d8b)
+
+**7 Reload Nginx to apply changes**
+```
+sudo systemctl reload nginx
+```
+![Reload nginx](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/fcf970a3-ac73-48c0-8291-d6eb9c45efa2)
+
+**8 The new website is now active but the web root /var/www/projectLEMP is still empty. Create an index.html file in this location so to test the virtual host work as expected.**
+```
+sudo echo ‘Hello LEMP from hostname’ $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) ‘with public IP’ $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html
+```
+![Ocupy web root](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/f81b8a2a-ddda-44eb-96a8-8d02829e60f1)
+
+**9 Open the IP address**
+```
+http://34.236.154.135:80
+```
+![IP address opened](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/d3a59b08-dd3b-41d3-967b-d0048d54cfb1)
+
+**10 Open with public DNS (port is optional)**
+```
+http://ec2-34-236-154-135.compute-1.amazonaws.com
+```
+![Public DNS used to open site](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/406185f6-3985-40ff-ba42-a075ed21827f)
+
+This file can be left in place as a temporary landing page for the application until an index.php file is set up to replace it. Once this is done, remove or rename the index.html file from the document root as it will take precedence over the index.php file by default.
+
+The LEMP stack is now fully configured. At this point, the LEMP stack is completely installed and fully operational.
+
+## Step 5: Testing PHP with Nginx
+Test the LEMP stack to validate that Nginx can correctly hand .php files off to the PHP processor.
+**1 Create a test PHP file in the document root. Open a new file called info.php within the document root.**
+```
+sudo nano /var/www/projectLEMP/info.php
+```
