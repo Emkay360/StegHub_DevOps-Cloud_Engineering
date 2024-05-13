@@ -161,13 +161,13 @@ server {
 ```
 ![Bare bone configuration](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/44a5c5ed-f63b-466e-bcaa-4a248ad07f1a)
 
-**Here’s what each directives and location blocks does:**
+**Here’s what each directive and location blocks does:**
 
-- listen - Defines what port nginx listens on. In this case it will listen on port 80, the default port for HTTP.
+- listen - Defines what port nginx listens on. In this case, it will listen on port 80, the default port for HTTP.
 
 - root - Defines the document root where the files served by this website are stored.
 
-- index - Defines in which order Nginx will prioritize the index files for this website. It is a common practice to list index.html files with a higher precedence than index.php files to allow for quickly setting up a maintenance landing page for PHP applications. You can adjust these settings to better suit your application needs.
+- index - Defines in which order Nginx will prioritize the index files for this website. It is a common practice to list index.html files with higher precedence than index.php files to allow for quickly setting up a maintenance landing page for PHP applications. You can adjust these settings to suit your application needs better.
 
 - server_name - Defines which domain name and/or IP addresses the server block should respond for. Point this directive to your domain name or public IP address.
 
@@ -184,6 +184,7 @@ sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/
 ![sites available](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/c426b265-4f35-47b1-80fb-2e07e0d8467c)
 
 This will tell Nginx to use this configuration when next it is reloaded.
+
 **5 Test the configuration syntax error**
 ```
 sudo nginx -t
@@ -202,7 +203,7 @@ sudo systemctl reload nginx
 ```
 ![Reload nginx](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/fcf970a3-ac73-48c0-8291-d6eb9c45efa2)
 
-**8 The new website is now active but the web root /var/www/projectLEMP is still empty. Create an index.html file in this location so to test the virtual host work as expected.**
+**8 The new website is now active but the web root /var/www/projectLEMP is still empty. Create an index.html file in this location to test the expected virtual host work.**
 ```
 sudo echo ‘Hello LEMP from hostname’ $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) ‘with public IP’ $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html
 ```
@@ -226,6 +227,7 @@ The LEMP stack is now fully configured. At this point, the LEMP stack is complet
 
 ## Step 5: Testing PHP with Nginx
 Test the LEMP stack to validate that Nginx can correctly hand .php files off to the PHP processor.
+
 **1 Create a test PHP file in the document root. Open a new file called info.php within the document root.**
 ```
 sudo nano /var/www/projectLEMP/info.php
