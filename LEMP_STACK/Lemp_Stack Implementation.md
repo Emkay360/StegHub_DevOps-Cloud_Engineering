@@ -78,10 +78,101 @@ sudo mysql
 
 ![mysql login](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/673b5d27-ed39-4020-9d6c-1973a8a6819a)
 
+This connects to the MySQL server as the administrative database user root inferred by the use of sudo when running the command.
+
 **3 Set a password for the root user using mysql_native_password as a default authentification method**
+
 Here is the password and it was defined as 'Emkay360'
 ```
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Emkay360';
 ```
 ![mysql password](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/2996ae36-4e3c-43bb-b28e-590b9d841e44)
 
+Then exit MySQL
+```
+mysql> exit
+```
+**4 Run the interactive script**
+```
+sudo mysql_secure_installation
+```
+![Create a new password](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/4d83a98d-a0ef-4080-aa53-cddd80b74c32)
+
+**After changing the root user password, log into MySQL**
+```
+sudo mysql -p
+```
+![Login into mysql](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/5e52b535-c0e2-4766-aabd-ad97661971a6)
+
+Then exit MySQL shell
+```
+exit
+```
+## Step 3: Install PHP
+**1 Install PHP**
+Install php-fpm (PHP fastCGI process manager) and tell nginx to pass PHP requests to this software for processing. Also, install php-mysql, a php module that allows PHP to communicate with MySQL-based databases. Core PHP packages will automatically be installed as dependencies.
+
+The following were installed:
+
+- php-fpm (PHP fastCGI process manager)
+- php-mysql
+```
+sudo apt install php-fpm php-mysql
+```
+![Installing PHP](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/b28e4441-ae22-424e-9300-633f9e3a2f3a)
+
+## Step 4: Configuring Nginx to Use PHP Processor
+**1 Create a root web directory for your_domain**
+```
+sudo mkdir /var/www/projectLEMP
+```
+**2 Assign ownership of the directory with the $USER environment variable which will reference your current system user**
+```
+sudo chown -R $USER:$USER /var/www/projectLEMP
+```
+![User directory created](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/a90e1105-2866-4075-95f0-3a067f3038a3)
+
+**3. Create a new configuration file in Nginx’s “sites-available” directory.**
+```
+sudo nano /etc/nginx/sites-available/projectLEMP
+```
+Paste in the following bare-bones configuration:
+```
+server {
+  listen 80;
+  server_name projectLEMP www.projectLEMP;
+  root /var/www/projectLEMP;
+
+  index index.html index.htm index.php;
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+
+  location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+    fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+  }
+
+  location ~ /\.ht {
+    deny all;
+  }
+}
+```
+![Bare bone configuration](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/44a5c5ed-f63b-466e-bcaa-4a248ad07f1a)
+
+**Here’s what each directives and location blocks does:**
+
+- listen - Defines what port nginx listens on. In this case it will listen on port 80, the default port for HTTP.
+
+- root - Defines the document root where the files served by this website are stored.
+
+- index - Defines in which order Nginx will prioritize the index files for this website. It is a common practice to list index.html files with a higher precedence than index.php files to allow for quickly setting up a maintenance landing page for PHP applications. You can adjust these settings to better suit your application needs.
+
+- server_name - Defines which domain name and/or IP addresses the server block should respond for. Point this directive to your domain name or public IP address.
+
+- location / - The first location block includes the try_files directive, which checks for the existence of files or directories matching a URI request. If Nginx cannot find the appropriate result, it will return a 404 error.
+
+- location ~ .php$ - This location handles the actual PHP processing by pointing Nginx to the fastcgi-php.conf configuration file and the php7.4-fpm.sock file, which declares what socket is associated with php-fpm.
+
+- location ~ /.ht - The last location block deals with .htaccess files, which Nginx does not process. By adding the deny all directive, if any .htaccess files happen to find their way into the document root, they will not be served to visitors.
