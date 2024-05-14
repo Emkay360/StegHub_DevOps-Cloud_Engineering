@@ -232,3 +232,78 @@ Test the LEMP stack to validate that Nginx can correctly hand .php files off to 
 ```
 sudo nano /var/www/projectLEMP/info.php
 ```
+There was a "502 bad Gateway" error
+
+![502 error](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/e12b3dd5-3674-484a-963d-25ca1aef9273)
+
+**2 Reconfigured the projectLEMP file by creating a symbolic link**
+
+- First, create a new project file using the link
+```
+sudo nano /etc/nginx/sites-available/projectLEMP
+```
+- Then copied and pasted the link below:
+```
+# /etc/nginx/sites-available/projectLEMP
+     server {
+     listen 80;
+     server_name projectLEMP www.projectLEMP;
+     root /var/www/projectLEMP;
+     index index.html index.htm index.php;
+     location / {
+         try_files $uri $uri/ =404;
+     }
+     location ~ \.php$ {
+         include snippets/fastcgi-php.conf;
+         fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+     }
+     location ~ /\.ht {
+         deny all;
+     }
+ }
+```
+- Saved and created the symbolic link
+```
+sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/
+```
+- It failed to create the link
+
+![Failed to create link as file exists](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/63f5e5e7-a80f-4f99-8e40-9228664c6b5a)
+
+- Go to sites-available to delete default and projectLEMP
+```
+sudo rm projectLEMP
+sudo rm default
+```
+![rm default and proctLEMP](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/a01d9ade-d0ed-4619-b0fe-59ac008b87fb)
+
+Still, there was an error linking and enabling sites
+
+- Next, go to sites-enabled and delete projectLEMP
+```
+cd etc/nginx/sites-enabled
+```
+```
+sudo rm projectLEMP
+```
+![sites enabled](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/9a40fbaa-4161-4008-8891-e0a734f9dbf4)
+ 
+- Lastly, link and enable projectLEMP
+```
+sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/
+```
+```
+sudo nginx -t
+```
+syntax successful and ok
+
+- Restarted nginx
+```
+sudo systmectl restart nginx
+```
+**3 Retested PHP with Nginx**
+
+![PHP Nginx Ok](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/f4e97dcb-01e6-4f9c-bfbe-7da946cbdd95)
+
+After checking the relevant information about the server through this page, It’s best to remove the file created as it contains sensitive information about the PHP environment and the Ubuntu server. It can always be recreated if the information is needed later.
+
