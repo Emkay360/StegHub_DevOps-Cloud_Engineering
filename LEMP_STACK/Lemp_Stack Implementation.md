@@ -307,3 +307,110 @@ sudo systmectl restart nginx
 
 After checking the relevant information about the server through this page, It’s best to remove the file created as it contains sensitive information about the PHP environment and the Ubuntu server. It can always be recreated if the information is needed later.
 
+## Step 6: Retrieving Data from MySQL Database with PHP
+## Create a new user with mysql_native_password authentication method to be able to connect to MySQL database from PHP.
+
+Create a database named todo_database and a user named todo_user
+
+**1 Connect to the MySQL console using the root account:**
+```
+sudo mysql -p
+```
+![Connected mysql](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/6b13200c-7a08-4579-97ab-311e97b9844b)
+
+**2 Create a new database**
+```
+CREATE DATABASE todo_database;
+```
+![Created a new database](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/14493514-5591-44ce-b300-9a53009cff21)
+
+**3 Create a new user and grant the user full privileges**
+```
+CREATE USER 'todo_user'@'%' IDENTIFIED WITH mysql_native_password BY 'Muhammad$360';
+
+GRANT ALL ON todo_database.* TO 'todo_user'@'%';
+```
+![News user granted full privilledges](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/23928ac2-3231-4956-bcd1-99f33a21f39b)
+
+Exit MySQL
+```
+exit
+```
+**4 Login to MySQL console using the user's credentials**
+
+```
+mysql -u todo_user -p
+```
+```
+SHOW DATABASES
+```
+![logged in with user credentials](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/b19a6400-7cce-440c-bd27-4ba0b02f7623)
+
+**5 Create a table named todo_list**
+```
+CREATE TABLE todo_database.todo_list (
+  item_id INT AUTO_INCREMENT,
+  content VARCHAR(255),
+  PRIMARY KEY(item_id)
+);
+```
+**6 Insert a few rows of content in the test table**
+```
+INSERT INTO todo_database.todo_list (content) VALUES ("My first important item");
+
+INSERT INTO todo_database.todo_list (content) VALUES ("My second important item");
+
+INSERT INTO todo_database.todo_list (content) VALUES ("My third important item");
+
+INSERT INTO todo_database.todo_list (content) VALUES ("and this one more thing");
+```
+![Created a table](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/df2742ec-27eb-45af-8ac3-7e670bc67a7e)
+
+**7 Confirm if the data was successfully saved on the table**
+```
+SELECT * FROM todo_database.todo_list;
+```
+![Confirm table](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/8d0c3d63-b9eb-4a2e-8828-ba1945ab4829)
+
+Exit MySQL
+```
+exit
+```
+## Create a PHP script that will connect to MySQL and query the content.
+
+**1 Create a new PHP file in the custom web root directory**
+```
+sudo nano /var/www/projectLEMP/todo_list.php
+```
+The PHP script connects to MySQL database and queries for the content of the todo_list table display the results in a list. If there’s a problem with the database connection, it will throw an exception.
+
+Copy the content into the todo_list.php
+```
+<?php
+$user = "todo_user";
+$password = "Muhammad$360";
+$database = "todo_database";
+$table = "todo_list";
+
+try {
+  $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
+  echo "<h2>TODO</h2><ol>";
+  foreach($db->query("SELECT content FROM $table") as $row) {
+    echo "<li>" . $row['content'] . "</li>";
+  }
+  echo "</ol>";
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br/>";
+    die();
+}
+?>
+```
+![php script](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/691499fb-90a8-4bdd-88d8-147b752a627c)
+
+**2 Access this page on the browser by using the domain name or public IP address**
+```
+http://44.222.207.129/todo_list.php
+```
+![To do list](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/f2c55e60-c3f3-4353-a489-3417697b3d51)
+
+PHP environment is ready to connect and interact with the MySQL server.
