@@ -37,11 +37,11 @@ Hierarchical databases are well-suited for applications that require highly stru
 
 The network database model addresses the need for more complex relationships by allowing each child to have multiple parents. Entities are organized in a graph that can be accessed through several paths.
 
-### Relational database management system**
+### Relational database management system
 
 Relational database management systems (RDBMS) are the **most popular data model** because of their user-friendly interface. It is based on normalizing data in the rows and columns of the tables. This is a viable option when you need a data storage system that is scalable, flexible, and able to manage lots of information.
 
-### Object-oriented database management system**
+### Object-oriented database management system
 
 Object-oriented models store data in objects instead of rows and columns. It is based on object-oriented programming (OOP) that allows objects to have members such as fields, properties, and methods.
 
