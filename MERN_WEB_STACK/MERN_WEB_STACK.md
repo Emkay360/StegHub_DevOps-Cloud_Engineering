@@ -272,3 +272,12 @@ router.delete('/todos/:id', (req, res, next) => {
 module.exports = router;
 ```
 ![vimjs](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/a6c6ab1e-bfd7-4dc7-a737-58c9c6bccd43)
+
+## MongoDB Database
+mLab provides MongoDB database as a service solution (DBaaS). MongoDB has two cloud database management system components: mLab and Atlas, Both were formerly cloud databases managed by MongoDB (MongoDB acquired mLab in 2018, with certain differences). In November, MongoDB merged the two cloud databases and as such, mLab.com redirects to the MongoDB Atlas website.
+
+**1. Create a MongoDB database and collection inside mLab**
+
+MongoDB Cluster Overview
+
+![MongoDB](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/d9c53cd5-f856-4d5f-8168-a644515718d9)
