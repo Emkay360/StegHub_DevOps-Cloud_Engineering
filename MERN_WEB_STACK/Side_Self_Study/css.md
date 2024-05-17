@@ -27,7 +27,7 @@ Finally, **inline** styles are snippets of CSS written directly into HTML code, 
 
 ```<h1  style=”font-size:40px;color:violet;”>Check out this headline!</h1>```
 
-### CSS Rule
+### CSS Rule and Syntax
 
 A CSS rule consists of a selector and a declaration block.
 
