@@ -1,4 +1,4 @@
-![image](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/89b81db1-0c67-48ef-aff3-7b4633129423)## MERN STACK IMPLEMENTATION IN AWS 
+## MERN STACK IMPLEMENTATION IN AWS 
 ### Introduction:
 The MERN stack is a collection of technologies that help developers build robust and scalable web applications using JavaScript. The acronym “MERN” stands for MongoDB, Express, React, and Node.js, with each component playing a role in the development process. MongoDB serves as a document-oriented database that can efficiently store data in JSON format.
 
