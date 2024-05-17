@@ -193,6 +193,7 @@ router.delete('/todos/:id', (req, res, next) => {
 
 module.exports = router;
 ```
+![vimjs](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/c4836b8d-b9fa-41cc-b4ed-7912304998df)
 
 ## Models
 A model is at the heart of JavaScript based applications and it is what makes it interactive.
