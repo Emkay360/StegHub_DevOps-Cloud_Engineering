@@ -175,6 +175,7 @@ mkdir routes && cd routes && touch api.js
 ```
 vim api.js
 ```
+```
 const express = require('express');
 const router = express.Router();
 
@@ -193,3 +194,81 @@ router.delete('/todos/:id', (req, res, next) => {
 module.exports = router;
 ```
 
+## Models
+A model is at the heart of JavaScript based applications and it is what makes it interactive.
+
+Models was used to define the database schema. This is important in order be able to define the fields stored in each Mongodb document.
+
+In essence, the schema is a blueprint of how the database is constructed, including other data fields that may not be required to be stored in the database. These are known as virtual properties. To create a schema and a model, mongoose was installed, which is a Node.js package that makes working with mongodb easier.
+
+**1. Change the directory back to Todo folder and install mongoose**
+```
+npm install mongoose
+```
+![Install mongoose](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/8a077275-fa7a-47f4-8358-21c61e6617e9)
+
+**2. Create a new folder models, switch to models directory, create a file todo.js inside models. Open the file**
+```
+mkdir models && cd models && touch todo.js
+```
+![Vim todo](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/3b331e55-7653-4168-808b-70d778d5de5e)
+
+```
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+// Create schema for todo
+const TodoSchema = new Schema({
+  action: {
+    type: String,
+    required: [true, 'The todo text field is required']
+  }
+});
+
+// Create model for todo
+const Todo = mongoose.model('todo', TodoSchema);
+
+module.exports = Todo;
+```
+![paste script](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/c9d80a50-c07f-4b1e-913b-68a631375c8d)
+
+The routes was updated from the file api.js in the ‘routes’ directory to make use of the new model.
+
+**3. In Routes directory, open api.js and delete the code inside with :%d.**
+```
+vim api.js
+```
+Paste the new code below
+```
+const express = require('express');
+const router = express.Router();
+const Todo = require('../models/todo');
+
+router.get('/todos', (req, res, next) => {
+  // This will return all the data, exposing only the id and action field to the client
+  Todo.find({}, 'action')
+    .then(data => res.json(data))
+    .catch(next);
+});
+
+router.post('/todos', (req, res, next) => {
+  if (req.body.action) {
+    Todo.create(req.body)
+      .then(data => res.json(data))
+      .catch(next);
+  } else {
+    res.json({
+      error: "The input field is empty"
+    });
+  }
+});
+
+router.delete('/todos/:id', (req, res, next) => {
+  Todo.findOneAndDelete({"_id": req.params.id})
+    .then(data => res.json(data))
+    .catch(next);
+});
+
+module.exports = router;
+```
+![vimjs](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/a6c6ab1e-bfd7-4dc7-a737-58c9c6bccd43)
