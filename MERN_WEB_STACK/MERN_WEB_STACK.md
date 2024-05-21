@@ -282,3 +282,16 @@ mLab provides MongoDB database as a service solution (DBaaS). MongoDB has two cl
 MongoDB Cluster Overview
 
 ![MongoDB](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/d9c53cd5-f856-4d5f-8168-a644515718d9)
+
+AWS cloud provider, in region N. Virginia (us-east-1) was selected.
+
+![Network access](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/2c52bf88-0558-4c63-a7f1-801fd3988b5b)
+
+Access from anywhere to the MongoDB database was allowed (Not secure but it is ideal for testing).
+
+![Network access](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/73526886-5d47-48e9-b4df-47aff86c8d21)
+
+A database named todo_db and collections named todos was created.
+
+![Todo](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/fe062053-d0c5-4b9f-96fc-2678e853238c)
+
