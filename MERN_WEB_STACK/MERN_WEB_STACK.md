@@ -351,3 +351,12 @@ app.listen(port, () => {
 });
 ```
 
+![vim indexjs](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/9c536fc3-9ccf-4eb8-99af-ed6ba8c19c94)
+
+Using environment variables to store information is considered more secure and best practice to separate configuration and secret data from the application, instead of writing connection strings directly inside the index.js application file.
+
+__4. Start your server using the command__
+```
+node index.js
+```
+![DB connected](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/7a3915f3-82c8-4c19-bee6-652d0d068860)
