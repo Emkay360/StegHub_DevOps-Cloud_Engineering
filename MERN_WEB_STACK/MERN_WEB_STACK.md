@@ -295,3 +295,59 @@ A database named todo_db and collections named todos was created.
 
 ![Todo](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/fe062053-d0c5-4b9f-96fc-2678e853238c)
 
+__2. Create a file in your Todo directory and name it .env, open the file__
+
+```
+touch .env && vim .env
+```
+Add the connection string below to access the database
+```
+DB = ‘mongodb+srv://<username>:<password>@<network-address>/<dbname>?retryWrites=true&w=majority’
+```
+![mongodb](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/a3da8849-f380-4423-9728-48c325b79106)
+
+__3. Update the index.js to reflect the use of .env so that Node.js can connect to the database.__
+```
+vim index.js
+```
+Delete existing content in the file, and update it with the entire code below:
+```
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const routes = require('./routes/api');
+const path = require('path');
+require('dotenv').config();
+
+const app = express();
+
+const port = process.env.PORT || 5000;
+
+// Connect to the database
+mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log(`Database connected successfully`))
+  .catch(err => console.log(err));
+
+// Since mongoose promise is deprecated, we override it with Node's promise
+mongoose.Promise = global.Promise;
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+app.use(bodyParser.json());
+
+app.use('/api', routes);
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  next();
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+```
+
