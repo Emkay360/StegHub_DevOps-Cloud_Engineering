@@ -2,7 +2,7 @@
 ### Introduction:
 The MERN stack is a collection of technologies that help developers build robust and scalable web applications using JavaScript. The acronym “MERN” stands for MongoDB, Express, React, and Node.js, with each component playing a role in the development process. MongoDB serves as a document-oriented database that can efficiently store data in JSON format.
 
-**This guide shows comprehensive overview on setting up and utilizing each components of MERN stack in creating and developing robust web applications**
+**This guide shows a comprehensive overview on setting up and utilizing each component of MERN stack in creating and developing robust web applications**
 
 ## Step 0: Prerequisites
 
@@ -360,3 +360,8 @@ __4. Start your server using the command__
 node index.js
 ```
 ![DB connected](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/7a3915f3-82c8-4c19-bee6-652d0d068860)
+
+## Testing Backend Code without Frontend using RESTful API
+Postman was used to test the backend code. The endpoints were tested. JSON was sent back with the necessary fields for the endpoints that require a body since it’s what was set up in the code.
+
+__1. Open Postman and Set the header__
