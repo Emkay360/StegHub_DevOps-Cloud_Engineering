@@ -365,3 +365,71 @@ node index.js
 Postman was used to test the backend code. The endpoints were tested. JSON was sent back with the necessary fields for the endpoints that require a body since it’s what was set up in the code.
 
 __1. Open Postman and Set the header__
+```
+http://54.91.117.155:5000/api/todos
+```
+__Creating ```GET``` request to the API__
+
+![postman connected](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/e440e84f-ddb4-403b-8edb-6c926f1e675d)
+
+__Creating ```POST``` request to the API__
+
+![postman POST](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/a0153c38-b3dd-495f-9faf-38c9f37a01ef)
+
+![Multiple testing](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/1d83095b-8a40-4560-8874-4a02dd006f06)
+
+__Create a ```DELETE``` request to the API__
+
+![Delete post](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/496ff434-629c-4065-bddc-462c1a7864a9)
+
+__Hint:__ To delete a task, make sure to add its ID as part of ```DELETE``` request
+```
+54.91.117.155:5000/api/todos/6650ae2ff5f474eaa9b54f04
+```
+## Step 2: Frontend Creation
+It is time to create a user interface for a Web client (browser) to interact with the application via the API
+
+- In the same root directory as your backend code, which is the Todo directory, run:
+```
+npx create-react-app client
+```
+![Create react app](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/944402ba-766e-4d82-96a2-48e819a282b3)
+
+This will create a folder in the ```Todo```directory called ```client``` , where all the react code will be added
+
+## Running a React App
+Before testing the react app, the following dependencies need to be installed in the project root directory.
+
+- Install __concurrently__. It is used to run more than one command simultaneously from the same terminal window.
+```
+npm install concurrently --save-dev
+```
+![concurrent install](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/b77bff09-c95b-4125-8106-4756eaaef3df)
+
+- Install __nodemon__. It is used to run and monitor the server. If there is any change in the server code, nodemon will restart it automatically and load the new changes.
+```
+npm install nodemon --save-dev
+```
+![install nodemon](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/edba87c0-1aaa-44c1-a312-ee93d87745a2)
+
+Nodemon is used to run the server and monitor it as well. If there is any change in the server code, Nodemon will restart it automatically with the new changes.
+- Next, open your ```package.json``` file in the Todo directory of the app project, and change the highlighted part of the following code:
+```
+"scripts": {
+  "start": "node index.js",
+  "start-watch": "nodemon index.js",
+  "dev": "concurrently \"npm run start-watch\" \"cd client && npm start\""
+}
+```
+![concurrenlty script](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/dcbe8144-eacc-4ac6-9c84-37a72b65a6c0)
+
+## Configure Proxy In ```package.json```
+- Change the directory to “client”
+```
+cd client
+```
+- Open the ```package.jason``` file
+```
+vi package.json
+```
+
