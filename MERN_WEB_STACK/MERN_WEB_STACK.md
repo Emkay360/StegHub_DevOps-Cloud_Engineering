@@ -773,6 +773,8 @@ Run:
 npm run dev
 ```
 ![npm dev](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/8c19d58c-cdc6-47e0-9e5f-f43a34e99c2e)
+![Working](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/fe12f995-fd0a-40f3-8db9-8298f6189d6f)
+
 
 At this point, the To-Do app is ready and fully functional with the functionality discussed earlier: Creating a task, deleting a task, and viewing all the tasks.
 
