@@ -1,12 +1,12 @@
 ## MERN STACK IMPLEMENTATION IN AWS 
 ### Introduction:
-The MERN stack is a collection of technologies that help developers build robust and scalable web applications using JavaScript. The acronym “MERN” stands for MongoDB, Express, React, and Node.js, with each component playing a role in the development process. MongoDB serves as a document-oriented database that can efficiently store data in JSON format.
+The MERN stack is a collection of technologies that help developers build robust and scalable web applications using JavaScript. The acronym “MERN” stands for MongoDB, Express, React, and Node.js, with each component playing a role in the development process. MongoDB is a document-oriented database that can efficiently store data in JSON format.
 
-**This guide shows a comprehensive overview on setting up and utilizing each component of MERN stack in creating and developing robust web applications**
+**This guide shows a comprehensive overview of setting up and utilizing each component of the MERN stack in creating and developing robust web applications**
 
 ## Step 0: Prerequisites
 
-**1.** EC2 Instance of t3.small type and Ubuntu 24.04 LTS (HVM) was lunched in the us-east-1 region using the AWS console. The choice of the instance type was based on the following:
+**1.** EC2 Instance of t3.small type and Ubuntu 24.04 LTS (HVM) was launched in the US-east-1 region using the AWS console. The choice of the instance type was based on the following:
 
 - Memory: The t3.small instance offers more memory than the t2.micro, which is advantageous for applications that require more memory to operate efficiently.
 
@@ -430,6 +430,349 @@ cd client
 ```
 - Open the ```package.jason``` file
 ```
-vi package.json
+vim package.json
 ```
+![proxy](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/b6f715c8-dc6b-4c76-8fbd-c7bbed7a57d3)
+
+The app opened and started running on localhost:3000
+
+__Note:__ To access the application from the internet, TCP port 3000 has been opened on EC2.
+
+## Creating React Components
+One of the advantages of React is that it makes use of components, which are reusable and also makes code modular. The Todo app has two stateful components and one stateless component. From Todo directory, run:
+```
+cd client
+```
+Move to the ```src``` directory
+```
+cd src
+```
+Create another file under the ```src``` and call it ```components```
+```
+mkdir components
+```
+Move into the ```components```
+```
+cd components
+```
+Inside the ‘components’ directory create three files “Input.js”, “ListTodo.js” and “Todo.js”.
+```
+touch Input.js ListTodo.js Todo.js
+```
+![src](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/9da753bb-dced-435a-a7a3-fe0a21a93057)
+
+- Open ```Input.js```
+```
+vim input.js
+```
+Paste the following command:
+```
+import React, { Component } from 'react';
+import axios from 'axios';
+
+class Input extends Component {
+  state = {
+    action: ""
+  }
+
+  handleChange = (event) => {
+    this.setState({ action: event.target.value });
+  }
+
+  addTodo = () => {
+    const task = { action: this.state.action };
+
+    if (task.action && task.action.length > 0) {
+      axios.post('/api/todos', task)
+        .then(res => {
+          if (res.data) {
+            this.props.getTodos();
+            this.setState({ action: "" });
+          }
+        })
+        .catch(err => console.log(err));
+    } else {
+      console.log('Input field required');
+    }
+  }
+
+  render() {
+    let { action } = this.state;
+    return (
+      <div>
+        <input type="text" onChange={this.handleChange} value={action} />
+        <button onClick={this.addTodo}>add todo</button>
+      </div>
+    );
+  }
+}
+
+export default Input;
+```
+![Inputjs](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/e44e9ca1-cde9-40af-9d34-b0ee80fbb603)
+
+To make use Axios, a Promise-based HTTP client for the browser and node.js, you need to cd into your client from your terminal and run yarn add axios or npm install axios.
+
+- Move to the client folder
+```
+cd ..
+```
+- Move to the clients folder
+```
+cd ..
+```
+- Install Axios
+```
+npm install axios
+```
+- Go to the ```components``` directory
+```
+cd src/components
+```
+- After that open your ```ListTodo.js```
+```
+vim ListTodo.js
+```
+Past the following command:
+```
+import React from 'react';
+
+const ListTodo = ({ todos, deleteTodo }) => {
+  return (
+    <ul>
+      {
+        todos && todos.length > 0 ? (
+          todos.map(todo => {
+            return (
+              <li key={todo._id} onClick={() => deleteTodo(todo._id)}>
+                {todo.action}
+              </li>
+            );
+          })
+        ) : (
+          <li>No todo(s) left</li>
+        )
+      }
+    </ul>
+  );
+}
+
+export default ListTodo;
+```
+![Import react](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/246f55d1-ffa4-42a2-85de-0211c0819e88)
+
+Then in the Todo.js write the following command:
+```
+vim Todo.js
+```
+```
+import React, { Component } from 'react';
+import axios from 'axios';
+
+import Input from './Input';
+import ListTodo from './ListTodo';
+
+class Todo extends Component {
+  state = {
+    todos: []
+  }
+
+  componentDidMount() {
+    this.getTodos();
+  }
+
+  getTodos = () => {
+    axios.get('/api/todos')
+      .then(res => {
+        if (res.data) {
+          this.setState({
+            todos: res.data
+          });
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
+  deleteTodo = (id) => {
+    axios.delete(`/api/todos/${id}`)
+      .then(res => {
+        if (res.data) {
+          this.getTodos();
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
+  render() {
+    let { todos } = this.state;
+    return (
+      <div>
+        <h1>My Todo(s)</h1>
+        <Input getTodos={this.getTodos} />
+        <ListTodo todos={todos} deleteTodo={this.deleteTodo} />
+      </div>
+    );
+  }
+}
+
+export default Todo;
+```
+![Todojs](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/39298d5b-6ba4-4db9-a7c4-553834ea4efb)
+
+- We need to make a little adjustment to our react code. Delete the logo and adjust our App.js to look like this
+Move to the src folder
+```
+cd ..
+```
+Ensure to be in the src folder and run:
+```
+vim App.js
+```
+- Copy and paste the following code
+```
+import React from 'react';
+import Todo from './components/Todo';
+import './App.css';
+
+const App = () => {
+  return (
+    <div className="App">
+      <Todo />
+    </div>
+  );
+}
+
+export default App;
+```
+![appjs](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/c6c84fb4-9747-4af8-87a8-df0767ebbe44)
+
+- In the ```src``` directory, open the ```App.css```
+```
+vim App.css
+```
+Paste the following code into it
+```
+.App {
+  text-align: center;
+  font-size: calc(10px + 2vmin);
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input {
+  height: 40px;
+  width: 50%;
+  border: none;
+  border-bottom: 2px #101113 solid;
+  background: none;
+  font-size: 1.5rem;
+  color: #787a80;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  width: 25%;
+  height: 45px;
+  border: none;
+  margin-left: 10px;
+  font-size: 25px;
+  background: #101113;
+  border-radius: 5px;
+  color: #787a80;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+}
+
+ul {
+  list-style: none;
+  text-align: left;
+  padding: 15px;
+  background: #171a1f;
+  border-radius: 5px;
+}
+
+li {
+  padding: 15px;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  background: #282c34;
+  border-radius: 5px;
+  overflow-wrap: break-word;
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 300px) {
+  .App {
+    width: 80%;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 15px;
+    margin-left: 0;
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  .App {
+    width: 60%;
+  }
+
+  input {
+    width: 50%;
+  }
+
+  button {
+    width: 30%;
+    margin-left: 10px;
+    margin-top: 0;
+  }
+}
+```
+![appjs](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/75a8d58a-f062-46d1-8ca1-97bfd699bc1d)
+
+- In the ```src``` directory, open the ```index.css```
+```
+vim index.css
+```
+```
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  background-color: #282c34;
+  color: #787a80;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+```
+![indexcss](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/7ff4703a-395b-4fe9-9674-2a70b70ced44)
+
+- Go to the Todo directory
+```
+cd ../..
+```
+Run:
+```
+npm run dev
+```
+![npm dev](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/8c19d58c-cdc6-47e0-9e5f-f43a34e99c2e)
+
+At this point, the To-Do app is ready and fully functional with the functionality discussed earlier: Creating a task, deleting a task, and viewing all the tasks.
 
