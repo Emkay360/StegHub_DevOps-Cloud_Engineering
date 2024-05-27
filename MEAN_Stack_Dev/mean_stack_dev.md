@@ -92,6 +92,8 @@ sudo systemctl enable mongod
 ```
 sudo systemctl status mongod
 ```
+![image](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/1e1bae3c-a836-4f93-9b6f-b06926e01a0c)
+
 __5. Install body-parser package__
 ```
 sudo npm install body-parser
