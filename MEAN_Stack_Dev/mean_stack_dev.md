@@ -1,4 +1,4 @@
-![image](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/1e1bae3c-a836-4f93-9b6f-b06926e01a0c)## MEAN Stack Deployment to Ubuntu
+## MEAN Stack Deployment to Ubuntu
 ### Introduction:
 The MEAN stack is a JavaScript-based framework for developing scalable web applications. The term MEAN is an acronym for MongoDB, Express, Angular, and Node — the four key technologies that make up the layers of the technology stack.
 
