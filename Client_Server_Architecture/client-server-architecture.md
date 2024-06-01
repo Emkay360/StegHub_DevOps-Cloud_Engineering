@@ -1,4 +1,4 @@
-![Create table](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/b31f09e2-7abc-46fa-a66c-613a9222b364)## Task - Implement a Client-Server Architecture using MySQL Database Management System (DBMS)
+## Task - Implement a Client-Server Architecture using MySQL Database Management System (DBMS)
 ### The following instructions were followed to implement the above task:
 #### Step 1. Create and configure two Linux-based virtual servers (EC2 instance in AWS)
 - ```mysql server```
