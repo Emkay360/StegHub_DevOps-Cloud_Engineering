@@ -1,4 +1,4 @@
-## Task - Implement a Client-Server Architecture using MySQL Database Management System (DBMS)
+![Create table](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/b31f09e2-7abc-46fa-a66c-613a9222b364)## Task - Implement a Client-Server Architecture using MySQL Database Management System (DBMS)
 ### The following instructions were followed to implement the above task:
 #### Step 1. Create and configure two Linux-based virtual servers (EC2 instance in AWS)
 - ```mysql server```
@@ -107,3 +107,33 @@ Replace ```127.0.0.1``` with ```0.0.0.0```
 ![myswl databse](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/954a7963-a98c-4f25-89a8-e982a6283a62)
 
 ## Step 6 - From ```mysql client``` Linxus Sever, connect remotely to ```mysql server``` Database Engine without SSH. The mysql utility must be used to perform this action.
+```
+sudo mysql -u admin -p -h 172.31.24.181
+```
+![logged in](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/dd53aa54-17c6-46ae-8f6f-a8b993e4f29e)
+## Step 7 - Check that the connection to the remote MySQL server is successful and can perform SQL queries.
+```
+show databases;
+```
+![Show databases](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/86edac27-4936-4959-8df0-75b90dc10b9d)
+
+__Create a table, insert rows into a table, and select from the table__
+```
+CREATE TABLE test_db.test_table (
+  item_id INT AUTO_INCREMENT,
+  content VARCHAR(255),
+  PRIMARY KEY(item_id)
+);
+
+INSERT INTO test_db.test_table (content) VALUES ("My first choice of food is rice");
+
+INSERT INTO test_db.test_table (content) VALUES ("My second choice of movie is Avengers");
+
+SELECT * FROM test_db.test_table;
+```
+![Create table](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/15fb0640-0685-44a3-879f-df1549d7cb5e)
+
+At this point, this project is successfully complete. This deployment is a fully functional MySQL Client-Server set up.
+
+
+
