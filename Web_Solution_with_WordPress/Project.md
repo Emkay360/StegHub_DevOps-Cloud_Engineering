@@ -16,9 +16,9 @@ This project involves setting up storage infrastructure on two Linux servers and
 #### Step 1: Prepare the Web Server
 
 - __Launch an EC2 Instance:__
-- Create an EC2 instance that will serve as the web server.
-- Create three 10GiB volumes in the same Availability Zone (AZ) as the web server.
-- Attach the volumes to the web server.
+  - Create an EC2 instance that will serve as the web server.
+  - Create three 10GiB volumes in the same Availability Zone (AZ) as the web server.
+  - Attach the volumes to the web server.
 
 ![Web Server EC2 created](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/fdef6de6-3905-404a-90e2-3de4695530f8)
 ![Security group](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/5a44408c-2417-4aa3-a465-090d4f37c47a)
