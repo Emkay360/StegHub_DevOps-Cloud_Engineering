@@ -16,7 +16,6 @@ This project involves setting up storage infrastructure on two Linux servers and
 #### Step 1: Prepare the Web Server
 
 - __Launch an EC2 Instance:__
-
 - Create an EC2 instance that will serve as the web server.
 - Create three 10GiB volumes in the same Availability Zone (AZ) as the web server.
 - Attach the volumes to the web server.
