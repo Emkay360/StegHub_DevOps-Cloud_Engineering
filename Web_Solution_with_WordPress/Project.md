@@ -61,3 +61,8 @@ __5b. Use ```lsblk``` utility to view the newly configured partitions on each of
 lsblk
 ```
 ![partitioning](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/351f1ed6-100f-4da1-9065-a30b786a132b)
+
+__6. Install ```lvm``` package__
+```
+sudo yum install lvm2 -y
+```
