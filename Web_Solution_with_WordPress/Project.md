@@ -20,15 +20,15 @@ This project involves setting up storage infrastructure on two Linux servers and
   - Create three 10GiB volumes in the same Availability Zone (AZ) as the web server.
   - Attach the volumes to the web server.
 
-![Web Server EC2 created](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/fdef6de6-3905-404a-90e2-3de4695530f8)
-![Security group](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/5a44408c-2417-4aa3-a465-090d4f37c47a)
+![Instance created](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/c33e4b72-de83-42f4-b77b-9263ae594f87)
+![Security group](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/2cf5d533-624c-4fc3-82f3-b43995b76cbf)
 
 __2. Open up the Linux terminal to begin configuration.__
     - SSh into instance
     ```
-    ssh -i "emkay.pem" ubuntu@ec2-54-158-25-148.compute-1.amazonaws.com
+    ssh -i "myinstance.pem" ec2-user@172-31-24-187
     ```
-![ssh client](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/bb44bd12-d782-4b5a-9251-2f78826cc568)
+![Ec2 created](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/7ddb7593-0ba0-4dd0-a3fc-487c4a698721)
 
 __3. Use ```lsblk``` to inspect what block devices are attached to the server. All devices in Linux reside in /dev/ directory. Inspect with ```ls /dev/``` and ensure all 3 newly created devices are there. Their name will likely be ```xvdf```, ```xvdg``` and ```xvdh```.__
 ```
@@ -60,9 +60,94 @@ __5b. Use ```lsblk``` utility to view the newly configured partitions on each of
 ```
 lsblk
 ```
-![partitioning](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/351f1ed6-100f-4da1-9065-a30b786a132b)
+![Partitioned](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/c8551fe7-e147-44b2-8f49-9dd8bddbb934)
 
 __6. Install ```lvm``` package__
 ```
 sudo yum install lvm2 -y
+```
+![sudo yum](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/1543cf2e-a44a-46ea-8a73-4927a06db553)
+
+__7. Use ```pvcreate``` utility to mark each of the 3 dicks as physical volumes (PVs) to be used by LVM. Verify that each of the volumes has been created successfully.__
+```
+sudo pvcreate /dev/xvdf1 /dev/xvdg1 /dev/xvdh1
+
+sudo pvs
+```
+![sudo pvs](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/2718c43e-22c5-4203-9b6c-9ec67f09a198)
+
+__8. Use ```vgcreate``` utility to add all 3 PVs to a volume group (VG). Name the VG webdata-vg. Verify that the VG has been created successfully__
+```
+sudo vgcreate webdata-vg /dev/xvdf1 /dev/xvdg1 /dev/xvdh1
+
+sudo vgs
+```
+![sudo vgs](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/b61b4c41-2510-4d4a-a669-f74cd6e8a2e7)
+
+__9. Use ```lvcreate``` utility to create 2 logical volumes, apps-lv (Use half of the PV size), and logs-lv (Use the remaining space of the PV size). Verify that the logical volumes have been created successfully.__
+```
+sudo lvcreate -n apps-lv -L 14G webdata-vg
+
+sudo lvcreate -n logs-lv -L 14G webdata-vg
+
+sudo lvs
+```
+![lvcreate](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/a0c58499-223d-4b77-b98a-8d33137e9583)
+
+```apps-lv``` will be used to store data for the website while ```logs-lv``` will be used to store data for logs.
+
+__10a. Verify the entire setup__
+```
+sudo vgdisplay -v   #view complete setup, VG, PV and LV
+```
+![vg display](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/9b30eb08-f5be-4d37-8365-c9ae5e8805ab)
+```
+lsblk
+```
+![lsblk](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/b52727c2-331e-4538-98f4-86e09d46e304)
+
+__10b. Use ```mkfs.ext4``` to format the logical volumes with ext4 filesystem__
+```
+sudo mkfs.ext4 /dev/webdata-vg/apps-lv
+
+sudo mkfs.ext4 /dev/webdata-vg/logs-lv
+```
+![mfks](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/4024ed8c-6d4e-4691-ac86-68978bafc5a1)
+
+__11. Create ```/var/www/html``` directory to store website files and ```/home/recovery/logs``` to store backup of log data__
+```
+sudo mkdir -p /var/www/html
+
+sudo mkdir -p /home/recovery/logs
+```
+### Mount /var/www/html on apps-lv logical volume
+```
+sudo mount /dev/webdata-vg/apps-lv /var/www/html
+```
+![var html](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/6b4895f1-adec-495d-bff7-5163bdf3504c)
+
+__12. Use ```rsync``` utility to backup all the files in the log directory ```/var/log``` into ```/home/recovery/logs``` (This is required before mounting the file system)__
+```
+sudo rsync -av /var/log /home/recovery/logs
+```
+![backup](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/5c1b07b8-e34a-46a6-8a1d-a468106fb6c1)
+
+__13. Mount ```/var/log``` on ```logs-lv``` logical volume (All existing data on /var/log is deleted with this mounting process which was why the data was backed up)__
+```
+sudo mount /dev/webdata-vg/logs-lv /var/log
+```
+![Mount](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/0b81f603-af0e-4216-a09f-0d5460c6d47e)
+
+__14. Restore log file back into ```/var/log``` directory__
+```
+sudo rsync -av /home/recovery/logs/log/ /var/log
+```
+![recover](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/0eaf0510-c4ae-4c72-81b6-31547f53291f)
+
+__15. Update ```/etc/fstab``` file so that the mount configuration will persist after restart of the server__
+```
+sudo blkid  # To fetch the UUID
+
+sudo vi /etc/fstab
+```
 ```
