@@ -151,3 +151,48 @@ sudo blkid  # To fetch the UUID
 sudo vi /etc/fstab
 ```
 ```
+df -h
+```
+![df h](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/628f1917-0d67-4cdf-a477-b17cf705011c)
+
+## Step 2 - Prepare the Database Server
+### Launch a second RedHat EC2 instance that will have a role - DB Server. Repeat the same steps as for the Web Server, but instead of ```apps-lv```, create ```dv-lv``` and mount it to ``` /db``` directory.
+
+__1. Create 3 volumes in the same AZ as the DB Server ec2 each of 10GB and attache all 3 volumes one by one to the DB Server.__
+![Db server](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/36c0baf3-9d09-4f76-aa60-c95a53e018df)
+![Volume](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/12e54971-d778-4c1f-88cb-8b185c684bbc)
+
+__2. Open up the Linux terminal to begin configuration.__
+```
+ssh -i "Redhat.pem" ec2-user@54.158.18.4
+```
+![Db server connected](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/beafd616-5969-4a49-9e77-c7d12abf3e97)
+
+__3. Use ```lsblk``` to inspect what block devices are attached to the server. Their name will likely be ```xvdf```, ```xvdg``` and ```xvdh```.__
+```
+lsblk
+```
+![xvdh](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/edb27327-299c-4c27-800c-4c403713dde5)
+
+__4a. Use ```gdisk``` utility to create a single partition on each of the 3 disks.__
+```
+sudo gdisk /dev/xvdf
+```
+![Psrtitioning 1](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/698c4329-ff30-4754-b496-40dacdfb8825)
+```
+sudo gdisk /dev/xvdg
+```
+![Partitioning 2](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/dca46dab-2223-4939-abf5-e30a7a7ec1f1)
+```
+sudo gdisk /dev/xvdh
+```
+![Partitioning 3](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/3a4779b1-8355-4f11-8f40-d37b4d3631f9)
+
+__4b. Use ```lsblk```utility to view the newly configured partitions on each of the 3 disks__
+```
+lsblk
+```
+![lsblk to check](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/4ff0a7cf-c799-4170-a5b6-83df0a0584b4)
+
+
+
