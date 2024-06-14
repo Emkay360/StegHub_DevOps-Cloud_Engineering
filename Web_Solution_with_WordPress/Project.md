@@ -188,7 +188,7 @@ sudo gdisk /dev/xvdh
 ```
 ![Partitioning 3](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/3a4779b1-8355-4f11-8f40-d37b4d3631f9)
 
-__4b. Use ```lsblk```utility to view the newly configured partitions on each of the 3 disks__
+__4b. Use ```lsblk``` utility to view the newly configured partitions on each of the 3 disks__
 ```
 lsblk
 ```
