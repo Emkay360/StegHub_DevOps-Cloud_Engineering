@@ -164,7 +164,7 @@ __1. Create 3 volumes in the same AZ as the DB Server ec2 each of 10GB and attac
 
 __2. Open up the Linux terminal to begin configuration.__
 ```
-ssh -i "Redhat.pem" ec2-user@54.158.18.4
+ssh -i "ec2pair.pem" ec2-user@3.208.15.164
 ```
 ![Db server connected](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/beafd616-5969-4a49-9e77-c7d12abf3e97)
 
