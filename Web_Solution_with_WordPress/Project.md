@@ -44,17 +44,17 @@ df -h
 
 __5a. Use ```gdisk``` utility to create a single partition on each of the 3 disks.__
 ```
-sudo gdisk /dev/xvdf
+sudo gdisk /dev/nvme4n1
 ```
-![Sudo disk](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/3559b156-ebb7-452c-ad67-eb2d4bc07437)
+![partioning nvme4n1](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/6ba4026d-4b7d-44f9-8ecb-1698aa19c04b)
 ```
-sudo gdisk /dev/xvdg
+sudo gdisk /dev/nvme5n1
 ```
-![gdisk for g](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/32837244-e4ae-48e9-a29c-946b758ac154)
+![partioning nvme5n1](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/70cef55c-be84-4d68-8534-d37c69d6958f)
 ```
-sudo gdisk /dev/xvde
+sudo gdisk /dev/nvme6n1
 ```
-![gdisk for e](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/4cbf7a59-2dbd-4b44-b90c-c595cb49e038)
+![partioning nvme6n1](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/fe6a09f9-a4ac-4f4d-9a1f-ed70b0451b1d)
 
 __5b. Use ```lsblk``` utility to view the newly configured partitions on each of the 3 disks__
 ```
@@ -70,15 +70,15 @@ sudo yum install lvm2 -y
 
 __7. Use ```pvcreate``` utility to mark each of the 3 dicks as physical volumes (PVs) to be used by LVM. Verify that each of the volumes has been created successfully.__
 ```
-sudo pvcreate /dev/xvdf1 /dev/xvdg1 /dev/xvdh1
+sudo pvcreate /dev/nvme4n1p1 /dev/nvme5n1p1 /dev/nvme6n1p1
 
 sudo pvs
 ```
-![sudo pvs](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/2718c43e-22c5-4203-9b6c-9ec67f09a198)
+![Physical volume created](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/19c5c67a-a915-4acb-805e-a358499ddc2d)
 
 __8. Use ```vgcreate``` utility to add all 3 PVs to a volume group (VG). Name the VG webdata-vg. Verify that the VG has been created successfully__
 ```
-sudo vgcreate webdata-vg /dev/xvdf1 /dev/xvdg1 /dev/xvdh1
+sudo vgcreate webdata-vg /dev/nvme4n1p1 /dev/nvme5n1 /dev/nvme6n1
 
 sudo vgs
 ```
