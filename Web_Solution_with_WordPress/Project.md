@@ -130,7 +130,7 @@ __12. Use ```rsync``` utility to backup all the files in the log directory ```/v
 ```
 sudo rsync -av /var/log /home/recovery/logs
 ```
-![backup](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/5c1b07b8-e34a-46a6-8a1d-a468106fb6c1)
+![Backup file](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/1c535563-d72b-4e83-be11-7d7a4892d08e)
 
 __13. Mount ```/var/log``` on ```logs-lv``` logical volume (All existing data on /var/log is deleted with this mounting process which was why the data was backed up)__
 ```
