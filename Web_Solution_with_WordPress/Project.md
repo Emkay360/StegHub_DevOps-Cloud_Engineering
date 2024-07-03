@@ -156,7 +156,7 @@ df -h
 ![df h](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/628f1917-0d67-4cdf-a477-b17cf705011c)
 
 ## Step 2 - Prepare the Database Server
-### Launch a second RedHat EC2 instance that will have a role - DB Server. Repeat the same steps as for the Web Server, but instead of ```apps-lv```, create ```dv-lv``` and mount it to ``` /db``` directory.
+### Launch a second RedHat EC2 instance that will have a role - DB Server. Repeat the same steps as for the Web Server, but instead of ```apps-lv```, create ```dv-lv``` and mount it to ```db``` directory.
 
 __1. Create 3 volumes in the same AZ as the DB Server ec2 each of 10GB and attache all 3 volumes one by one to the DB Server.__
 ![Db server](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/36c0baf3-9d09-4f76-aa60-c95a53e018df)
@@ -164,7 +164,7 @@ __1. Create 3 volumes in the same AZ as the DB Server ec2 each of 10GB and attac
 
 __2. Open up the Linux terminal to begin configuration.__
 ```
-ssh -i "ec2pair.pem" ec2-user@3.208.15.164
+ssh -i ec2.pem ec2-user@3.81.216.66
 ```
 ![Db server connected](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/beafd616-5969-4a49-9e77-c7d12abf3e97)
 
@@ -194,5 +194,156 @@ lsblk
 ```
 ![lsblk to check](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/4ff0a7cf-c799-4170-a5b6-83df0a0584b4)
 
+__5. Install lvm package__
+```
+sudo yum install lvm2 -y
+```
+__6. Use ```pvcreate``` utility to mark each of the 3 dicks as physical volumes (PVs) to be used by LVM. Also, use ```vgcreate``` utility to add all 3 PVs to a volume group (VG). Name the VG ```database-vg```. Verify that each of the volumes and the VG have been created successfully.__
+```
+sudo pvcreate /dev/xvdf1 /dev/xvdg1 /dev/xvdh1
+```
+```
+sudo vgcreate database-vg /dev/xvdf1 /dev/xvdg1 /dev/xvdh1
+```
+__6b. Create directories for the logical volumes and mount db and logs__
+```
+sudo mkdir -p /var/db
+```
+```
+sudo mkdir -p /var/logs
+```
 
+__7. Use ```lvcreate``` utility to create a logical volume, ```db-lv``` (Use 14G of the PV size since it is the only LV to be created). Verify that the logical volumes have been created successfully.__
+```
+sudo lvcreate -n db-lv -L 20G database-vg
 
+sudo lvs
+```
+
+__8. Use ```mkfs.ext4``` to format the logical volumes with ext4 filesystem and mount ```/db``` on ```db-lv```__
+```
+sudo mkfs.ext4 /dev/database-vg/db-lv
+```
+```
+sudo mount /dev/database-vg/db-lv /var/db
+```
+__8b. Do the same for logs__
+```
+sudo mkfs.ext4 /dev/database-vg/logs-lv
+```
+```
+sudo mount /dev/database-vg/logs-lv /var/logs
+```
+__9. Update ```/etc/fstab``` file so that the mount configuration will persist after restart of the server__
+
+#### Get the UUID of the device
+```
+sudo blkid
+```
+![blkid](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/cfb27e59-7c07-4c9e-b38a-bfcaaff5be81)
+#### Update the ```/etc/fstab``` file with the format shown inside the file using the ```UUID```. Remember to remove the leading and ending quotes.
+```
+sudo vi /etc/fstab
+```
+__10. Test the configuration and reload daemon. Verify the setup__
+```
+sudo mount -a   # Test the configuration
+
+sudo systemctl daemon-reload
+
+df -h   # Verifies the setup
+```
+![check](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/3dba968b-d771-4d8b-b28d-3c9359fb59c8)
+## Step 3 - Install WordPress on the Web Server EC2
+
+__1. Update the repository__
+```
+sudo yum -y update
+```
+![update](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/d1a6f812-6eca-4c7b-81d8-1f14fb4b7d28)
+
+__2. Install wget, Apache and it's dependencies__
+```
+sudo yum wget httpd php-fpm php-json
+```
+__3. Install the latest version of PHP and it's dependencies using the Remi repository__
+
+#### Install the EPEL repository
+The package manager ```dnf``` was used here. It generally offers better performance and more efficient dependency resolution. ```dnf``` is the modern, actively maintained package manager, while yum is older and gradually being phased out.
+
+#### The system version of the RHEL EC2 is version "9"
+```
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+```
+![install epo](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/4005006e-73f3-4985-894f-3e0aa6915238)
+#### Install yum utils and enable remi-repository
+```
+sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-9.rpm
+```
+![remi repo](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/5e88c66c-2abd-460d-9cf5-b1ed542a9090)
+
+#### After the successful installation of yum-utils and Remi-packages, search for the PHP modules which are available for download by running the command.
+```
+sudo dnf module list php
+```
+![dnf module](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/ddbfd3a8-a4b1-4127-9d97-92c12e7772f5)
+#### The output above indicates that if the currently installed version of PHP is PHP 8.1, there is need to install the newer release, PHP 8.2. Reset the PHP modules.
+```
+sudo dnf module reset php
+```
+#### Having run reset, enable the PHP 8.2 module by running
+```
+sudo dnf module enable php:remi-8.2
+```
+#### Install PHP, PHP-FPM (FastCGI Process Manager) and associated PHP modules using the command.
+```
+sudo dnf install php php-opcache php-gd php-curl php-mysqlnd
+```
+![install php](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/38db7d63-838d-4342-9873-917d493ddfab)
+#### To verify the version installed to run.
+```
+php -v
+```
+#### Start, enable and check status of PHP-FPM on boot-up.
+```
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm
+sudo systemctl status php-fpm
+```
+![enable php](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/a1cf043f-1564-468b-bcf2-4b553bb4e017)
+
+__4. Configure SELinux Policies__
+To instruct SELinux to allow Apache to execute the PHP code via PHP-FPM run.
+```
+sudo chown -R apache:apache /var/www/html
+sudo chcon -t httpd_sys_rw_content_t /var/www/html -R
+sudo setsebool -P httpd_execmem 1
+sudo setsebool -P httpd_can_network_connect=1
+sudo setsebool -P httpd_can_network_connect_db=1
+```
+#### Restart Apache web server for PHP to work with Apache web server.
+```
+sudo systemctl restart httpd
+```
+__5. Download WordPress__
+
+Download wordpress and copy wordpress content to /var/www/html
+```
+sudo mkdir wordpress && cd wordpress
+sudo wget http://wordpress.org/latest.tar.gz
+sudo tar xzvf latest.tar.gz   # Extract wordpress
+```
+![download wordpress](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/6bbff5d3-9e44-4e70-9690-05fc72bb9b8e)
+
+#### After extraction, ```cd``` into the extracted ```wordpress``` and ```Copy``` the content of ```wp-config-sample.php``` to ```wp-config.php```.
+This will copy and create the file wp-config.php
+```
+cd wordpress/
+sudo cp -R wp-config-sample.php wp-config.php
+```
+#### Exit from the extracted ```wordpress```. Copy the content of the extracted wordpress to ```/var/www/html```.
+```
+cd ..
+sudo cp -R wordpress/. /var/www/html/
+```
+## Step 4 - Install MySQL on DB Server EC2
