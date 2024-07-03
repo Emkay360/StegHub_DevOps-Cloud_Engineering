@@ -347,3 +347,38 @@ cd ..
 sudo cp -R wordpress/. /var/www/html/
 ```
 ## Step 4 - Install MySQL on DB Server EC2
+#### Update the EC2
+```
+sudo yum update -y
+```
+![sudo yumm](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/b96f78b7-24d4-432e-bc8f-b2df0ae2d517)
+#### Install MySQL Server
+```
+sudo yum install mysql-server -y
+```
+#### Verify that the service is up and running. If it is not running, restart the service and enable it so it will be running even after reboot.
+```
+sudo systemctl start mysqld
+sudo systemctl enable mysqld
+sudo systemctl status mysqld
+```
+## 5. Configure DB to work with WordPress
+#### Run mysql secure script
+```
+sudo mysql -u root -p
+
+CREATE DATABASE wordpress_db;
+CREATE USER 'wordpress'@'172.31.21.190' IDENTIFIED WITH mysql_native_password BY 'admin';
+GRANT ALL PRIVILEGES ON wordpress_db.* TO 'wordpress'@'172.31.21.190' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+show databases;
+exit
+```
+![mysql](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/72a3775e-a485-46c6-9551-7f17ab836fc1)
+
+- Test your db connection by logging in to your db from your webserver, before that, ensure you allowed port 3306 (which is the default port for mysql) in your mysql instance inbound rules, configure the connection to your-webserver-IP-address/32
+- Then access your webserver instance and also install mysql client
+```
+sudo yum install -y mysql
+```
+
