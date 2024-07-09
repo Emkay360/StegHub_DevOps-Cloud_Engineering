@@ -376,9 +376,26 @@ exit
 ```
 ![mysql](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/72a3775e-a485-46c6-9551-7f17ab836fc1)
 
-- Test your db connection by logging in to your db from your webserver, before that, ensure you allowed port 3306 (which is the default port for mysql) in your mysql instance inbound rules, configure the connection to your-webserver-IP-address/32
-- Then access your webserver instance and also install mysql client
+- Test your db connection by logging in to your db from your web server, before that, ensure you allowed port 3306 (which is the default port for mysql) in your mysql instance inbound rules, configure the connection to your-webserver-IP-address/32
+- Then access your webserver instance and also install mysql server
 ```
-sudo yum install -y mysql
+sudo yum install -y mysql-server
 ```
+__Configure wordpress__
+```
+sudo vi wp-config.php
+```
+![config httpd](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/07b8d962-5ad2-4c2c-8faf-8bce1f11f928)
+
+then changed the ```username```to Wordparess_db, ```user``` to ```Wordpress```, input password which was 'admin', and lastly, changed the localhost IP to the DB private IP address ```172.31.23.24```
+
+__Sign up to Wordpress__
+
+Once successfully created, install WordPress and log into WordPress.
+
+![wordpress](https://github.com/Emkay360/StegHub_DevOps-Cloud_Engineering/assets/56301419/e64723f7-ef50-402b-891c-5613c574f39f)
+
+#### Conclusion
+Congratulations! By following these steps, you can successfully set up the storage infrastructure and deploy a WordPress site with a remote MySQL database on EC2 instances running Red Hat Linux.
+
 
