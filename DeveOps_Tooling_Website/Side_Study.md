@@ -64,19 +64,19 @@ Amazon Simple Storage Service (S3) is AWS's object storage service. It stores da
 Amazon Elastic File System (EFS) is AWS's managed NFS service. It provides scalable file storage for use with AWS Cloud services and on-premises resources.
 
 ### Differences Between Block Storage, Object Storage, and Network File System
-__- Block Storage:__
+- __Block Storage:__
 
    - Uses raw storage volumes (blocks).
    - Ideal for applications requiring low latency and high performance.
    - Examples: Amazon EBS.
 
-__-Object Storage:__
+- __Object Storage:__
 
    - Stores data as objects in buckets.
    - Scalable and suitable for unstructured data.
    - Examples: Amazon S3.
     
-__-Network File System:__
+- __Network File System:__
 
    - Manages shared file storage.
    - Suitable for workloads that require shared file access.
