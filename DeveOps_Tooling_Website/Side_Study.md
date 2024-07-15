@@ -72,15 +72,15 @@ __- Block Storage:__
 
 __-Object Storage:__
 
-    - Stores data as objects in buckets.
-    - Scalable and suitable for unstructured data.
-    - Examples: Amazon S3.
+   - Stores data as objects in buckets.
+   - Scalable and suitable for unstructured data.
+   - Examples: Amazon S3.
     
 __-Network File System:__
 
-    - Manages shared file storage.
-    - Suitable for workloads that require shared file access.
-    - Examples: Amazon EFS.
+   - Manages shared file storage.
+   - Suitable for workloads that require shared file access.
+   - Examples: Amazon EFS.
 
 ## Conclusion
 Understanding the differences between NAS, SAN, and related protocols, as well as the various types of storage provided by services like AWS, is crucial for designing and managing efficient and scalable storage solutions. Block-level storage offers flexibility and high performance, while object storage is ideal for scalability and managing large datasets. Network file systems provide shared file access, making them suitable for collaborative environments.
