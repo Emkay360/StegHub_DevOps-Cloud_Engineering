@@ -33,9 +33,7 @@ __SAN vs. NAS__
 
 A SAN and network-attached storage (NAS) are two shared networked storage solutions. While a SAN is a local network composed of multiple devices, NAS is a single storage device that connects to a local area network (LAN). NAS is Ethernet-based, while SAN can use Ethernet and Fibre Channel. In addition, while SAN focuses on high performance and low latency, NAS focuses on ease of use, manageability, scalability, and lower total cost of ownership (TCO). Unlike SAN, NAS storage controllers partition the storage and then own the file system. Effectively this makes a NAS server look like a Windows or UNIX/Linux server to the server consuming the storage.
 
-
-
-
+![Diff](https://github.com/user-attachments/assets/5cf72f64-ca4e-4a40-b60c-46b4e94b0f5f)
 ### Related Protocols
 #### Network File System (NFS)
 The Network File System (NFS) is a mechanism for storing files on a network. It is a distributed file system that allows users to access files and directories located on remote computers and treat those files and directories as if they were local.
