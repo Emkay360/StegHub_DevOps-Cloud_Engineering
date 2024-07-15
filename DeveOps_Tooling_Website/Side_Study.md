@@ -66,9 +66,9 @@ Amazon Elastic File System (EFS) is AWS's managed NFS service. It provides scala
 ### Differences Between Block Storage, Object Storage, and Network File System
 __- Block Storage:__
 
-    - Uses raw storage volumes (blocks).
-    - Ideal for applications requiring low latency and high performance.
-    - Examples: Amazon EBS.
+   - Uses raw storage volumes (blocks).
+   - Ideal for applications requiring low latency and high performance.
+   - Examples: Amazon EBS.
 
 __-Object Storage:__
 
