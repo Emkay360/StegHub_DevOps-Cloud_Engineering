@@ -1,4 +1,4 @@
-## DevOps Tooling Website Solution Project
+![image](https://github.com/user-attachments/assets/a7b0af34-2f3a-4ef2-93f7-097f4255bbf5)## DevOps Tooling Website Solution Project
 ### Overview
 
 ![3 tier application](https://github.com/user-attachments/assets/b28f34fa-b50a-4b0d-8d34-78ac316ee7e2)
@@ -69,3 +69,93 @@ sudo mkfs.xfs /dev/webdata-vg/apps-lv
 sudo mkfs.xfs /dev/webdata-vg/logs-lv
 ```
 ![format volumes](https://github.com/user-attachments/assets/1f5882cb-d3e1-40ad-9d7c-f088f5dfe851)
+
+- Create mount points and mount the logical volumes:
+```
+sudo mkdir -p /mnt/apps /mnt/logs /mnt/opt
+sudo mount /dev/webdata-vg/apps-lv /mnt/apps
+sudo mount /dev/webdata-vg/logs-lv /mnt/logs
+sudo mount /dev/webdata-vg/opt-lv /mnt/opt
+```
+![mnt](https://github.com/user-attachments/assets/ea419f32-7a97-418a-befc-9f0d66909ce2)
+
+-__Install and Configure NFS Server:__
+```
+sudo yum update -y
+sudo yum install nfs-utils -y
+sudo systemctl start nfs-server.service
+sudo systemctl enable nfs-server.service
+sudo systemctl status nfs-server.service
+```
+![nfs started](https://github.com/user-attachments/assets/16bb1784-2a8e-4917-b95a-1cd08045c771)
+
+- Set permissions for the mount points:
+```
+sudo chown -R nobody: /mnt/apps /mnt/logs /mnt/opt
+sudo chmod -R 777 /mnt/apps /mnt/logs /mnt/opt
+sudo systemctl restart nfs-server.service
+```
+- Configure NFS exports:
+```
+/mnt/apps 172.31.0.0/20(rw,sync,no_all_squash,no_root_squash)
+/mnt/logs 172.31.0.0/20(rw,sync,no_all_squash,no_root_squash)
+/mnt/opt 172.31.0.0/20(rw,sync,no_all_squash,no_root_squash)
+```
+Save and apply the changes:
+```
+sudo exportfs -arv
+```
+![arv export](https://github.com/user-attachments/assets/178c1db0-0855-4300-983a-fb6ddd293841)
+
+-__Open NFS Ports:__
+
+- Check NFS ports and open them in the security group:
+```
+rpcinfo -p | grep nfs
+```
+![Open port](https://github.com/user-attachments/assets/81e7741c-e397-4059-ab16-1295633ed150)
+
+- Open ports TCP 111, UDP 111, and UDP 2049 in the security group.
+
+![sec group](https://github.com/user-attachments/assets/234caaed-a1bb-4332-8841-2720d8a31470)
+
+## Step 2: Configure the Database Server
+-__SSH into the instance__
+```
+ssh -i ec2pair.pem ubuntu@54.152.130.212
+```
+-__Install MySQL Server on Ubuntu 24.04:__
+
+- Update and install MySQL server:
+```
+sudo apt update && sudo apt upgrade -y
+sudo apt install mysql-server -y
+```
+-__Create a Database and User:__
+
+- Log in to MySQL and create a database and user:
+```
+sudo mysql
+```
+```
+CREATE DATABASE tooling;
+CREATE USER 'webaccess'@'172.31.0.0/20' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON tooling.* TO 'webaccess'@'172.31.0.0/20';
+FLUSH PRIVILEGES;
+EXIT;
+```
+![mysql serv](https://github.com/user-attachments/assets/1c1ca5d0-c6aa-4c48-83d9-86bf5fadf5af)
+
+- Edit the MySQL configuration file to bind it to all IP addresses, (0.0.0.0) Open the MySQL configuration file, which is located at ```/etc/mysql/mysql.conf.d/mysqld.cnf```
+```
+sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+```
+- Start and enable MySQL service:
+```
+sudo systemctl restart mysql
+sudo systemctl enable mysql
+sudo systemctl status mysql
+```
+![restart mysql](https://github.com/user-attachments/assets/b0bea22a-9cf0-4948-acc8-503c1fa462ba)
+
+## Step 3: Prepare the Web Servers
