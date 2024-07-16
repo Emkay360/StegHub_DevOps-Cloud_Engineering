@@ -161,3 +161,20 @@ sudo systemctl status mysql
 ![restart mysql](https://github.com/user-attachments/assets/b0bea22a-9cf0-4948-acc8-503c1fa462ba)
 
 ## Step 3: Prepare the Web Servers
+-__SSH into the instance__
+```
+ssh -i keypair.pem ec2-user@100.24.116.231
+```
+-__Configure NFS Client on All Web Servers:__
+
+- Launch (3) new EC2 instances with RHEL 8 OS.
+- Install NFS client:
+```
+sudo yum update -y
+sudo yum install nfs-utils nfs4-acl-tools -y
+```
+- Mount NFS Web shares ```/var/www```:
+```
+sudo mkdir -p /var/www
+sudo mount -t nfs -o rw,nosuid 172-31-11-64:/mnt/apps /var/www
+```  
