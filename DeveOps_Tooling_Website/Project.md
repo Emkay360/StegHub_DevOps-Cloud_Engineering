@@ -176,5 +176,48 @@ sudo yum install nfs-utils nfs4-acl-tools -y
 - Mount NFS Web shares ```/var/www```:
 ```
 sudo mkdir -p /var/www
-sudo mount -t nfs -o rw,nosuid 172-31-11-64:/mnt/apps /var/www
+sudo mount -t nfs -o rw,nosuid 172.31.11.64:/mnt/apps /var/www
 ```  
+- Add the following lines to /etc/fstab to ensure mounts persist after reboot:
+```
+sudo vi /etc/fstab
+```
+Add:
+```
+172.31.11.64:/mnt/apps /var/www nfs defaults 0 0
+```
+![mntg](https://github.com/user-attachments/assets/59eec301-e7e4-4699-8a02-786dc3b5ad3d)
+
+-__Install Apache and PHP:__
+
+- Install Remi's repository, Apache, and PHP:
+```
+sudo yum install httpd -y
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y 
+sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm -y 
+sudo dnf module reset php -y
+sudo dnf module enable php:remi-7.4 -y
+sudo dnf install php php-opcache php-gd php-curl php-mysqlnd -y
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm
+sudo setsebool -P httpd_execmem 1
+```
+- Start and enable Apache:
+```
+sudo systemctl start httpd
+sudo systemctl enable httpd
+```
+- Mount NFS Logs shares ```/var/log/httpd```:
+```
+sudo mkdir -p /var/log/httpd
+sudo mount -t nfs -o rw,nosuid 172.31.11.64:/mnt/logs /var/log/httpd
+```
+- Add the following lines to ```/etc/fstab``` to ensure mounts persist after reboot:
+```
+sudo vi /etc/fstab
+```
+Add:
+```
+172.31.11.64:/mnt/logs /var/log/httpd nfs defaults 0 0
+```
+-__Deploy Tooling Application:__
