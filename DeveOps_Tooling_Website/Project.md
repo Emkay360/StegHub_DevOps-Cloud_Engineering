@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/a7b0af34-2f3a-4ef2-93f7-097f4255bbf5)## DevOps Tooling Website Solution Project
+## DevOps Tooling Website Solution Project
 ### Overview
 
 ![3 tier application](https://github.com/user-attachments/assets/b28f34fa-b50a-4b0d-8d34-78ac316ee7e2)
