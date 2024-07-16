@@ -95,6 +95,8 @@ sudo chown -R nobody: /mnt/apps /mnt/logs /mnt/opt
 sudo chmod -R 777 /mnt/apps /mnt/logs /mnt/opt
 sudo systemctl restart nfs-server.service
 ```
+![image](https://github.com/user-attachments/assets/a7b0af34-2f3a-4ef2-93f7-097f4255bbf5)
+
 - Configure NFS exports:
 ```
 /mnt/apps 172.31.0.0/20(rw,sync,no_all_squash,no_root_squash)
