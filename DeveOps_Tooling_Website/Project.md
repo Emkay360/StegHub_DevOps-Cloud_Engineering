@@ -13,21 +13,21 @@ As a DevOps team member, you will implement a tooling website solution that prov
 6. Code Repository: GitHub
 
 ## Step 1: Prepare NFS Server
--__Launch an EC2 Instance:__
+- __Launch an EC2 Instance:__
 
 - Create an EC2 instance with RHEL 8 Operating System to serve as the ```NFS server```.
 - Create three 10GiB volumes in the same Availability Zone (AZ) as the ```NFS server```.
 - Attach the volumes to the ```NFS server```
 
--__Open the Linux Terminal:__
+- __Open the Linux Terminal:__
 
--__SSH into the instance__
+- __SSH into the instance__
 ```
 ssh -i ec2.pem ec2-user@3.237.94.123
 ```
 ![ssh key](https://github.com/user-attachments/assets/c5066d70-da0d-49fc-8332-63145ce63e68)
 
--__Create Partitions on Each Disk:__
+- __Create Partitions on Each Disk:__
 
 Use ```gdisk``` to create a single partition on each of the three disks:
 ```
@@ -44,7 +44,7 @@ Repeat the same process for other disks
 
 ![partitioned disks](https://github.com/user-attachments/assets/a21b7215-9b28-415f-90b6-56bb7c596e82)
 
--__Configure LVM on the Server:__
+- __Configure LVM on the Server:__
 
 - First, we install the lvm2 service.
 ```
@@ -79,7 +79,7 @@ sudo mount /dev/webdata-vg/opt-lv /mnt/opt
 ```
 ![mnt](https://github.com/user-attachments/assets/ea419f32-7a97-418a-befc-9f0d66909ce2)
 
--__Install and Configure NFS Server:__
+- __Install and Configure NFS Server:__
 ```
 sudo yum update -y
 sudo yum install nfs-utils -y
@@ -109,7 +109,7 @@ sudo exportfs -arv
 ```
 ![arv export](https://github.com/user-attachments/assets/178c1db0-0855-4300-983a-fb6ddd293841)
 
--__Open NFS Ports:__
+- __Open NFS Ports:__
 
 - Check NFS ports and open them in the security group:
 ```
@@ -122,18 +122,18 @@ rpcinfo -p | grep nfs
 ![sec group](https://github.com/user-attachments/assets/234caaed-a1bb-4332-8841-2720d8a31470)
 
 ## Step 2: Configure the Database Server
--__SSH into the instance__
+- __SSH into the instance__
 ```
 ssh -i ec2pair.pem ubuntu@54.152.130.212
 ```
--__Install MySQL Server on Ubuntu 24.04:__
+- __Install MySQL Server on Ubuntu 24.04:__
 
 - Update and install MySQL server:
 ```
 sudo apt update && sudo apt upgrade -y
 sudo apt install mysql-server -y
 ```
--__Create a Database and User:__
+- __Create a Database and User:__
 
 - Log in to MySQL and create a database and user:
 ```
@@ -161,11 +161,11 @@ sudo systemctl status mysql
 ![restart mysql](https://github.com/user-attachments/assets/b0bea22a-9cf0-4948-acc8-503c1fa462ba)
 
 ## Step 3: Prepare the Web Servers
--__SSH into the instance__
+- __SSH into the instance__
 ```
 ssh -i keypair.pem ec2-user@100.24.116.231
 ```
--__Configure NFS Client on All Web Servers:__
+- __Configure NFS Client on All Web Servers:__
 
 - Launch (3) new EC2 instances with RHEL 8 OS.
 - Install NFS client:
@@ -188,7 +188,7 @@ Add:
 ```
 ![mntg](https://github.com/user-attachments/assets/59eec301-e7e4-4699-8a02-786dc3b5ad3d)
 
--__Install Apache and PHP:__
+- __Install Apache and PHP:__
 
 - Install Remi's repository, Apache, and PHP:
 ```
@@ -220,4 +220,4 @@ Add:
 ```
 172.31.11.64:/mnt/logs /var/log/httpd nfs defaults 0 0
 ```
--__Deploy Tooling Application:__
+- __Deploy Tooling Application:__
