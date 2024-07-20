@@ -221,3 +221,20 @@ Add:
 172.31.11.64:/mnt/logs /var/log/httpd nfs defaults 0 0
 ```
 - __Deploy Tooling Application:__
+
+ - Fork the tooling source code from Darey.io GitHub account to your GitHub account.
+
+![Fork](https://github.com/user-attachments/assets/cf64b074-8a2a-44d8-bdb3-de43fc48c0f2)
+
+ - Then clone the source code repository to the Web server.
+```
+sudo yum install git -y
+git clone https://github.com/alagbaski/tooling.git
+```
+ - Deploy the code to the web server and ensure the repository's ```html``` folder is deployed to ```/var/www/html```.
+```
+cd tooling/html
+sudo mv * /var/www/html/
+```
+ - Verify that Apache files and directories are available on the web server in ```/var/www``` and on the NFS server ```/mnt/apps```.
+ - If you see the same files, it means NFS is mounted correctly. Create a new file ```touch test.txt``` from one server and check if it is accessible from other web servers.
