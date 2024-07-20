@@ -238,3 +238,8 @@ sudo mv * /var/www/html/
 ```
  - Verify that Apache files and directories are available on the web server in ```/var/www``` and on the NFS server ```/mnt/apps```.
  - If you see the same files, it means NFS is mounted correctly. Create a new file ```touch test.txt``` from one server and check if it is accessible from other web servers.
+
+- __Configure Database Connection for the Website:__
+
+  - Update the website's configuration to connect to the database (in /var/www/html/functions.php file).
+ 
