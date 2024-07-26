@@ -241,5 +241,5 @@ sudo mv * /var/www/html/
 
 - __Configure Database Connection for the Website:__
 
-  - Update the website's configuration to connect to the database (in /var/www/html/functions.php file).
+  - Update the website's configuration to connect to the database (in the ```/var/www/html/functions.php``` file).
  
