@@ -141,7 +141,7 @@ sudo mysql
 ```
 ```
 CREATE DATABASE tooling;
-CREATE USER 'webaccess'@'172.31.0.0/20' IDENTIFIED BY 'password';
+CREATE USER 'webaccess1'@'172.31.0.0/20' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON tooling.* TO 'webaccess'@'172.31.0.0/20';
 FLUSH PRIVILEGES;
 EXIT;
@@ -242,4 +242,9 @@ sudo mv * /var/www/html/
 - __Configure Database Connection for the Website:__
 
   - Update the website's configuration to connect to the database (in the ```/var/www/html/functions.php``` file).
- 
+   ```
+   sudo vi /var/www/html/functions.php
+   ```
+    - Add the ```db-private-ip``` as host, also include ```username```, ```password``` and ```db-name``` into the file.
+  - Apply the ```tooling-db.sql``` script to your database:
+    
