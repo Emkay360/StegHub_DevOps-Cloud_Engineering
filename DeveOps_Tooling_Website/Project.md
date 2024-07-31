@@ -246,5 +246,73 @@ sudo mv * /var/www/html/
    sudo vi /var/www/html/functions.php
    ```
     - Add the ```db-private-ip``` as host, also include ```username```, ```password``` and ```db-name``` into the file.
-  - Apply the ```tooling-db.sql``` script to your database:
+- Apply the ```tooling-db.sql``` script to your database:
+    - First, make sure MySQL client is installed on the Web servers.
+     ```
+     sudo yum install mysql -y
+     ```
+     ```
+     cd tooling
+     mysql -h <database-private-ip> -u <db-username> -p <db-name> < tooling-db.sql
+     ```
+    - Database Security Group:
+
+![BD security group](https://github.com/user-attachments/assets/68ec802f-798d-4a48-8e35-8de89a87c9f1)
+
+- __Create Admin User in MySQL:__
+    - First, we access the Database remotely from the web server with ```webaccess``` user credentials.
+    ```
+    sudo mysql -u webaccess -p -h <db-server-private-ip>
+    ```
+    - Create a new admin user with username ```myuser``` and password ```password```:
+    ```
+    USE tooling;
+    INSERT INTO users (id, username, password, email, user_type, status) VALUES (2, 'myuser', 
+    '5f4dcc3b5aa765d61d8327deb882cf99', 'user@mail.com', 'admin', '1');
+    EXIT
+    ```
+- __Open Port 80 & Required Ports:__
+
+    - Ensure the web server's TCP port 80 is open to allow HTTP traffic.
+
+    ![web server sg](https://github.com/user-attachments/assets/e7b4e865-5829-404a-9283-79f3e0cfe476)
+- __If Encountering 403 Errors & Apache Fails to Restart:__
+    - Then you will need to allow apache to use NFS mounted directories with SElinux enabled
+    ```
+    sudo setsebool -P httpd_use_nfs 1
+    ```
+    - Allow apache to make outside connection requests
+    ```
+    sudo setsebool -P httpd_can_network_connect=1
+    ```
+    - Then restart the Apache service again
+    ```
+    sudo systemctl restart httpd
+    ```
+    ![restart http](https://github.com/user-attachments/assets/e3e09a94-9eed-4f69-aa4d-6b386e347955)
+
+    - To disable selinux and make the change permanent, open selinux file and set selinux to disable.
+    ```
+    sudo setenforce 0
+
+    sudo vi /etc/sysconfig/selinux
+
+    SELINUX=disabled
+
+    sudo systemctl restart httpd
+    ```
+- __Access the Website:__
+
+    - Open a browser and navigate to ```http://<web-server-public-ip>/index.php.```
+
+    ![login to web server](https://github.com/user-attachments/assets/9130bd95-89e0-457d-8eba-e658f36c3e19)
+
+    - Log in with the ```myuser``` user.
+
+      ![logged in](https://github.com/user-attachments/assets/032cd275-494e-4dbe-9c11-acab16873f31)
+
+## Conclusion
+Congratulations! You have successfully implemented a web solution for a DevOps team using a LAMP stack with a remote database and NFS servers.
+
+
     
